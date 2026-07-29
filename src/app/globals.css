@@ -1,26 +1,426 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ============================================================================
+ * Elion — Tailwind v4 Theme
+ * Maps every TOKENS.md design token to Tailwind utility classes.
+ * Components MUST use these utilities (e.g. `bg-canvas`, `text-primary`)
+ * — never raw hex values.
+ * ============================================================================ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* --------------------------------------------------------------------
+   * Surfaces
+   * ------------------------------------------------------------------ */
+  --color-canvas: var(--bg-canvas);
+  --color-surface: var(--bg-surface);
+  --color-surface-raised: var(--bg-surface-raised);
+  --color-surface-sunken: var(--bg-surface-sunken);
+  --color-overlay: var(--bg-overlay);
+  --color-subtle: var(--bg-subtle);
+
+  /* --------------------------------------------------------------------
+   * Borders
+   * ------------------------------------------------------------------ */
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong: var(--border-strong);
+  --color-border-accent: var(--border-accent);
+
+  /* --------------------------------------------------------------------
+   * Text
+   * ------------------------------------------------------------------ */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-disabled: var(--text-disabled);
+  --color-text-inverse: var(--text-inverse);
+  --color-text-link: var(--text-link);
+  --color-text-link-hover: var(--text-link-hover);
+
+  /* --------------------------------------------------------------------
+   * Accents
+   * ------------------------------------------------------------------ */
+  --color-accent: var(--accent-primary);
+  --color-accent-hover: var(--accent-primary-hover);
+  --color-accent-pressed: var(--accent-primary-pressed);
+  --color-accent-soft: var(--accent-primary-soft);
+  --color-accent-border: var(--accent-primary-border);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-secondary-hover: var(--accent-secondary-hover);
+  --color-accent-secondary-soft: var(--accent-secondary-soft);
+
+  /* --------------------------------------------------------------------
+   * Status
+   * ------------------------------------------------------------------ */
+  --color-success: var(--status-success);
+  --color-success-soft: var(--status-success-soft);
+  --color-warning: var(--status-warning);
+  --color-warning-soft: var(--status-warning-soft);
+  --color-error: var(--status-error);
+  --color-error-soft: var(--status-error-soft);
+  --color-info: var(--status-info);
+  --color-info-soft: var(--status-info-soft);
+
+  /* --------------------------------------------------------------------
+   * Icons
+   * ------------------------------------------------------------------ */
+  --color-icon-primary: var(--icon-primary);
+  --color-icon-secondary: var(--icon-secondary);
+  --color-icon-tertiary: var(--icon-tertiary);
+  --color-icon-accent: var(--icon-accent);
+  --color-icon-disabled: var(--icon-disabled);
+
+  /* --------------------------------------------------------------------
+   * Typography — type scale (TOKENS §2.2)
+   * ------------------------------------------------------------------ */
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-mono:
+    var(--font-jetbrains-mono), ui-monospace, "SF Mono", Menlo, Consolas,
+    monospace;
+
+  --text-display-xl: 4.5rem; /* 72px */
+  --text-display-xl--line-height: 1.05;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-xl--font-weight: 600;
+
+  --text-display-lg: 3.5rem; /* 56px */
+  --text-display-lg--line-height: 1.1;
+  --text-display-lg--letter-spacing: -0.025em;
+  --text-display-lg--font-weight: 600;
+
+  --text-display-md: 2.75rem; /* 44px */
+  --text-display-md--line-height: 1.15;
+  --text-display-md--letter-spacing: -0.02em;
+  --text-display-md--font-weight: 600;
+
+  --text-h1: 2.25rem; /* 36px */
+  --text-h1--line-height: 1.2;
+  --text-h1--letter-spacing: -0.015em;
+  --text-h1--font-weight: 600;
+
+  --text-h2: 1.875rem; /* 30px */
+  --text-h2--line-height: 1.25;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h2--font-weight: 600;
+
+  --text-h3: 1.5rem; /* 24px */
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.005em;
+  --text-h3--font-weight: 600;
+
+  --text-h4: 1.25rem; /* 20px */
+  --text-h4--line-height: 1.4;
+  --text-h4--font-weight: 600;
+
+  --text-body-lg: 1.125rem; /* 18px */
+  --text-body-lg--line-height: 1.6;
+
+  --text-body-md: 1rem; /* 16px */
+  --text-body-md--line-height: 1.6;
+
+  --text-body-sm: 0.875rem; /* 14px */
+  --text-body-sm--line-height: 1.55;
+
+  --text-caption: 0.75rem; /* 12px */
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.02em;
+  --text-caption--font-weight: 500;
+
+  --text-eyebrow: 0.75rem; /* 12px */
+  --text-eyebrow--line-height: 1.4;
+  --text-eyebrow--letter-spacing: 0.08em;
+  --text-eyebrow--font-weight: 500;
+
+  /* --------------------------------------------------------------------
+   * Spacing scale (TOKENS §3)
+   * ------------------------------------------------------------------ */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+
+  /* --------------------------------------------------------------------
+   * Container widths (TOKENS §3.2)
+   * ------------------------------------------------------------------ */
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+  --container-6xl: 72rem;
+  --container-prose: var(--container-prose);
+  --container-max: var(--container-max);
+  --container-wide: var(--container-wide);
+
+  /* --------------------------------------------------------------------
+   * Radius (TOKENS §4)
+   * ------------------------------------------------------------------ */
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* --------------------------------------------------------------------
+   * Shadows (TOKENS §5)
+   * ------------------------------------------------------------------ */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-glow: var(--shadow-glow);
+
+  /* --------------------------------------------------------------------
+   * Motion timings + easings (TOKENS §6)
+   * ------------------------------------------------------------------ */
+  --ease-standard: var(--ease-standard);
+  --ease-emphasized: var(--ease-emphasized);
+  --ease-decelerate: var(--ease-decelerate);
+  --ease-accelerate: var(--ease-accelerate);
+  --ease-linear: var(--ease-linear);
+
+  --animate-fast: var(--motion-fast);
+  --animate-normal: var(--motion-normal);
+  --animate-slow: var(--motion-slow);
+  --animate-deliberate: var(--motion-deliberate);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ============================================================================
+ * Keyframes — used by chrome (mobile nav slide-in).
+ * ============================================================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ============================================================================
+ * Base layer
+ * ============================================================================ */
+@layer base {
+  html {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Typography baseline — every heading uses TOKENS §2.2 tokens via classes. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: var(--accent-primary-soft);
+    color: var(--text-primary);
+  }
+
+  /* Focus ring (a11y) — never hidden (UX_PRINCIPLES §5.2) */
+  :focus-visible {
+    outline: var(--a11y-focus-ring);
+    outline-offset: var(--a11y-focus-offset);
+    border-radius: var(--radius-sm);
+  }
+
+  /* Remove default focus on mouse-only interactions */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/* ============================================================================
+ * Utilities — reading width, prose, motion overrides
+ * ============================================================================ */
+@layer utilities {
+  /* Reading width for body paragraphs (TOKENS §2.3) */
+  .reading-width {
+    max-width: 65ch;
+  }
+
+  /* Container utility — centralises the layout shell */
+  .container-page {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: var(--space-8);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-page {
+      padding-inline: var(--space-12);
+    }
+  }
+
+  .container-prose {
+    max-width: var(--container-prose);
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .container-prose {
+      padding-inline: var(--space-8);
+    }
+  }
+
+  .container-wide {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .container-wide {
+      padding-inline: var(--space-8);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-wide {
+      padding-inline: var(--space-12);
+    }
+  }
+
+  /* Eyebrow label — uppercase, tracked, caption size */
+  .eyebrow {
+    font-size: var(--text-eyebrow);
+    line-height: var(--text-eyebrow--line-height);
+    letter-spacing: var(--text-eyebrow--letter-spacing);
+    font-weight: var(--text-eyebrow--font-weight);
+    text-transform: uppercase;
+    color: var(--accent-primary);
+  }
+
+  /* Skip-to-content — UX_PRINCIPLES §5.2 */
+  .skip-link {
+    position: absolute;
+    inset-inline-start: var(--space-4);
+    inset-block-start: var(--space-4);
+    z-index: var(--z-command);
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--bg-surface-raised);
+    color: var(--text-primary);
+    border: var(--border-default);
+    border-radius: var(--radius-md);
+    transform: translateY(-200%);
+    transition: transform var(--motion-fast) var(--ease-standard);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  /* Reduced motion overrides (UX_PRINCIPLES §5.1, TOKENS §6.3) */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Responsive typography — fluid clamp for type scale (TOKENS §2.4) */
+  .text-display-xl {
+    font-size: clamp(3.5rem, 4vw + 1rem, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+
+  .text-display-lg {
+    font-size: clamp(2.75rem, 3vw + 1rem, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+
+  .text-display-md {
+    font-size: clamp(2.25rem, 2vw + 1rem, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  .text-h1 {
+    font-size: clamp(1.875rem, 1.5vw + 1rem, 2.25rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+  }
+
+  .text-h2 {
+    font-size: clamp(1.5rem, 1vw + 1rem, 1.875rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+
+  .text-h3 {
+    font-size: clamp(1.25rem, 0.5vw + 1rem, 1.5rem);
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+    font-weight: 600;
+  }
+
+  .text-h4 {
+    font-size: clamp(1.125rem, 0.25vw + 1rem, 1.25rem);
+    line-height: 1.4;
+    font-weight: 600;
+  }
 }
