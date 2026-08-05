@@ -5,7 +5,9 @@
  */
 import { PROJECTS } from "@/lib/projects";
 
-const SITE_URL = "https://ayoola.dev";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://ayoolaxrp.github.io/elion-app";
 
 export const dynamic = "force-static";
 
@@ -32,7 +34,7 @@ export default function sitemap() {
   });
 
   const projectEntries = PROJECTS.map((project) => ({
-    url: `${SITE_URL}/projects/${project.slug}`,
+    url: `${SITE_URL}/projects/${project.slug}/`,
     lastModified,
     changeFrequency: "yearly",
     priority: 0.8,

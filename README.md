@@ -64,4 +64,4 @@ See `.github/workflows/deploy.yml`.
 
 Site-wide values (name, role, tagline, nav links, social handles) live in **`src/config/site.config.ts`**. Change values there — don't edit components directly.
 
-The canonical site URL is `https://ayoola.dev` (intended production domain). For now the live URL is the GitHub Pages one.
+The canonical site URL is `https://ayoolaxrp.github.io/elion-app/` (current GitHub Pages deployment). To override at build time, set `NEXT_PUBLIC_SITE_URL` (consumed by `sitemap.js` and `robots.js`); the `BASE_PATH` env var drives the `/elion-app/` asset prefix.
