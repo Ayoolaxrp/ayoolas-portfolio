@@ -39,10 +39,10 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://ayoolaxrp.github.io/elion-app
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: out
 
