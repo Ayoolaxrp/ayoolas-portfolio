@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Input, Textarea } from "./input";
 
 /**
- * Field — wrapper that pairs a label, control, helper, and error message.
+ * Field: wrapper that pairs a label, control, helper, and error message.
  *
  * Accessibility:
  * - Label is required (`<label for>` via `htmlFor`).
@@ -22,9 +22,9 @@ export interface FieldProps {
   label: string;
   /** Optional helper text shown below the input. */
   helper?: string;
-  /** Error message — also sets aria-invalid on the control. */
+  /** Error message: also sets aria-invalid on the control. */
   error?: string;
-  /** Field id — used to wire `htmlFor` on the label. */
+  /** Field id: used to wire `htmlFor` on the label. */
   id: string;
   /** Marks the field as required visually and for assistive tech. */
   required?: boolean;
@@ -96,7 +96,7 @@ export const Field: React.FC<FieldProps> = ({
 };
 
 /**
- * Convenience wrappers — pre-compose Field + Input / Textarea.
+ * Convenience wrappers: pre-compose Field + Input / Textarea.
  */
 export interface InputFieldProps extends Omit<FieldProps, "children"> {
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;

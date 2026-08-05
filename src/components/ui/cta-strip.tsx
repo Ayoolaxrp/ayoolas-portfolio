@@ -9,7 +9,7 @@ import { Heading } from "./heading";
 import { CONTACT_ROUTE, PRIMARY_CTA_LABEL } from "@/config/site.config";
 
 /**
- * CTAStrip — bottom-of-page call-to-action. Repeats the primary conversion goal.
+ * CTAStrip: bottom-of-page call-to-action. Repeats the primary conversion goal.
  *
  * Spec: COMPONENTS.md §13.
  * - Padding: space.16 vertical.
@@ -17,8 +17,8 @@ import { CONTACT_ROUTE, PRIMARY_CTA_LABEL } from "@/config/site.config";
  * - CTA: Button primary lg.
  *
  * Variants:
- * - default — surface bg.
- * - accent — accent.primarySoft bg with border.accent.
+ * - default: surface bg.
+ * - accent: accent.primarySoft bg with border.accent.
  *
  * Per D-008 the primary CTA label is exact.
  */
@@ -29,9 +29,9 @@ export interface CTAStripProps {
   headline: React.ReactNode;
   /** Subhead below the headline. */
   subhead?: React.ReactNode;
-  /** CTA label — defaults to "Book a Discovery Call" (D-008). */
+  /** CTA label: defaults to "Book a Discovery Call" (D-008). */
   ctaLabel?: string;
-  /** CTA href — defaults to /contact. */
+  /** CTA href: defaults to /contact. */
   ctaHref?: string;
   /** Visual variant. */
   variant?: CTAStripVariant;
@@ -60,7 +60,7 @@ export const CTAStrip: React.FC<CTAStripProps> = ({
   className,
 }) => (
   <section
-    className={cn(variantClasses[variant], "py-16", className)}
+    className={cn(variantClasses[variant], "py-20 md:py-28", className)}
     aria-labelledby="cta-strip-heading"
   >
     <Container>

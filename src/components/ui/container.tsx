@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Container — width-and-padding primitive that holds page content.
+ * Container: width-and-padding primitive that holds page content.
  *
  * Spec: COMPONENTS.md §4.
  * Variants: max (1200px), prose (720px), wide (1400px).

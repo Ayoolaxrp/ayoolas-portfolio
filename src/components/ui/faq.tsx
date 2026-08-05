@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * FAQItem — single question + answer in an accordion.
+ * FAQItem: single question + answer in an accordion.
  *
  * Spec: COMPONENTS.md §12.
  * - Border-bottom between items (border.subtle).
@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 export interface FAQItemProps {
   question: string;
   answer: React.ReactNode;
-  /** Stable id for the panel — required when controlled. */
+  /** Stable id for the panel: required when controlled. */
   id?: string;
   /** Initial open state. Defaults to false. */
   defaultOpen?: boolean;
@@ -100,7 +100,7 @@ export const FAQItem: React.FC<FAQItemProps> = ({
 FAQItem.displayName = "FAQItem";
 
 /**
- * FAQList — vertical stack of FAQItems with single-open behavior.
+ * FAQList: vertical stack of FAQItems with single-open behavior.
  *
  * When one item opens, others close (per COMPONENTS §12).
  * Pass `singleOpen={false}` to allow multiple open at once.

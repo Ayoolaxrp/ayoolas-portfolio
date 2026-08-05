@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /**
- * Badge — compact label for status, category, or metadata.
+ * Badge: compact label for status, category, or metadata.
  *
  * Spec: COMPONENTS.md §11.
  * - ≤ 1 word ideally. For multi-word labels, the same component handles them.
@@ -53,7 +53,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
 Badge.displayName = "Badge";
 
 /**
- * Tag — larger variant of Badge, for multi-word labels.
+ * Tag: larger variant of Badge, for multi-word labels.
  * Same variants, larger padding.
  */
 export const tagVariants = cva(

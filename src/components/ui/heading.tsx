@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Heading — typography primitive.
+ * Heading: typography primitive.
  *
  * Spec: COMPONENTS.md §6.
  * - Wraps <h1>–<h4>, display sizes, and eyebrow label.

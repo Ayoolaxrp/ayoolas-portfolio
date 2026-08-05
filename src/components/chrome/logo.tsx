@@ -4,11 +4,12 @@ import { cn } from "@/lib/utils";
 import { SITE_NAME } from "@/config/site.config";
 
 /**
- * Logo — wordmark only (BRAND §7).
+ * Logo: wordmark only (BRAND §7).
  *
  * Variants:
- * - default — Inter Semi Bold, lowercase, tight letter-spacing.
- * - mono — Inter, all uppercase, wider letter-spacing (for tight contexts).
+ * - default: Inter Semi Bold, natural case ("Awodeyi Ayoolamikun"),
+ *   tight letter-spacing.
+ * - mono: Inter, all uppercase, wider letter-spacing (for tight contexts).
  *
  * Color: text.primary.
  * Never rotates, never placed on busy imagery, no tagline.
@@ -36,9 +37,7 @@ export const Logo: React.FC<LogoProps> = ({
     <span
       className={cn(
         "font-semibold text-text-primary",
-        variant === "default"
-          ? "tracking-tight lowercase"
-          : "tracking-widest uppercase",
+        variant === "default" ? "tracking-tight" : "tracking-widest uppercase",
         sizeClasses[size],
         className,
       )}

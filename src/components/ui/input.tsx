@@ -4,7 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Input — single-line text input.
+ * Input: single-line text input.
  *
  * Spec: COMPONENTS.md §2.
  * Pairs with the Field wrapper component (label + helper + error).
@@ -61,7 +61,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = "Input";
 
 /**
- * Textarea — multi-line text input.
+ * Textarea: multi-line text input.
  *
  * Spec: COMPONENTS.md §3.
  * - Same tokens as Input. Min-height 120px.

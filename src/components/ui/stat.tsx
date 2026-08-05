@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Stat — display a single metric (number + label).
+ * Stat: display a single metric (number + label).
  *
  * Spec: COMPONENTS.md §14.
  * - Number color: text.primary. Optional `accent` variant.

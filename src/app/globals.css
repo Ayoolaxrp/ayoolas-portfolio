@@ -2,10 +2,10 @@
 @import "../styles/tokens.css";
 
 /* ============================================================================
- * Elion — Tailwind v4 Theme
+ * Elion: Tailwind v4 Theme
  * Maps every TOKENS.md design token to Tailwind utility classes.
  * Components MUST use these utilities (e.g. `bg-canvas`, `text-primary`)
- * — never raw hex values.
+ * never raw hex values.
  * ============================================================================ */
 
 @theme inline {
@@ -72,7 +72,7 @@
   --color-icon-disabled: var(--icon-disabled);
 
   /* --------------------------------------------------------------------
-   * Typography — type scale (TOKENS §2.2)
+   * Typography: type scale (TOKENS §2.2)
    * ------------------------------------------------------------------ */
   --font-sans:
     var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
@@ -80,43 +80,47 @@
   --font-mono:
     var(--font-jetbrains-mono), ui-monospace, "SF Mono", Menlo, Consolas,
     monospace;
+  --font-serif:
+    var(--font-newsreader), ui-serif, Georgia, Cambria, "Times New Roman", serif;
 
-  --text-display-xl: 4.5rem; /* 72px */
-  --text-display-xl--line-height: 1.05;
-  --text-display-xl--letter-spacing: -0.03em;
+  /* V5 design direction: a larger, tighter display scale. Editorial serif is
+     reserved for narrative accents; sans carries information. */
+  --text-display-xl: 6rem; /* 96px */
+  --text-display-xl--line-height: 0.98;
+  --text-display-xl--letter-spacing: -0.04em;
   --text-display-xl--font-weight: 600;
 
-  --text-display-lg: 3.5rem; /* 56px */
-  --text-display-lg--line-height: 1.1;
-  --text-display-lg--letter-spacing: -0.025em;
+  --text-display-lg: 4.5rem; /* 72px */
+  --text-display-lg--line-height: 1.02;
+  --text-display-lg--letter-spacing: -0.035em;
   --text-display-lg--font-weight: 600;
 
-  --text-display-md: 2.75rem; /* 44px */
-  --text-display-md--line-height: 1.15;
-  --text-display-md--letter-spacing: -0.02em;
+  --text-display-md: 3.5rem; /* 56px */
+  --text-display-md--line-height: 1.08;
+  --text-display-md--letter-spacing: -0.028em;
   --text-display-md--font-weight: 600;
 
-  --text-h1: 2.25rem; /* 36px */
-  --text-h1--line-height: 1.2;
-  --text-h1--letter-spacing: -0.015em;
+  --text-h1: 2.875rem; /* 46px */
+  --text-h1--line-height: 1.12;
+  --text-h1--letter-spacing: -0.024em;
   --text-h1--font-weight: 600;
 
-  --text-h2: 1.875rem; /* 30px */
-  --text-h2--line-height: 1.25;
-  --text-h2--letter-spacing: -0.01em;
+  --text-h2: 2.25rem; /* 36px */
+  --text-h2--line-height: 1.18;
+  --text-h2--letter-spacing: -0.018em;
   --text-h2--font-weight: 600;
 
-  --text-h3: 1.5rem; /* 24px */
-  --text-h3--line-height: 1.3;
-  --text-h3--letter-spacing: -0.005em;
+  --text-h3: 1.75rem; /* 28px */
+  --text-h3--line-height: 1.28;
+  --text-h3--letter-spacing: -0.012em;
   --text-h3--font-weight: 600;
 
-  --text-h4: 1.25rem; /* 20px */
+  --text-h4: 1.375rem; /* 22px */
   --text-h4--line-height: 1.4;
   --text-h4--font-weight: 600;
 
   --text-body-lg: 1.125rem; /* 18px */
-  --text-body-lg--line-height: 1.6;
+  --text-body-lg--line-height: 1.65;
 
   --text-body-md: 1rem; /* 16px */
   --text-body-md--line-height: 1.6;
@@ -131,7 +135,7 @@
 
   --text-eyebrow: 0.75rem; /* 12px */
   --text-eyebrow--line-height: 1.4;
-  --text-eyebrow--letter-spacing: 0.08em;
+  --text-eyebrow--letter-spacing: 0.14em;
   --text-eyebrow--font-weight: 500;
 
   /* --------------------------------------------------------------------
@@ -204,7 +208,7 @@
 }
 
 /* ============================================================================
- * Keyframes — used by chrome (mobile nav slide-in).
+ * Keyframes: used by chrome (mobile nav slide-in).
  * ============================================================================ */
 @keyframes fadeIn {
   from {
@@ -221,6 +225,112 @@
   }
   to {
     transform: translateX(0);
+  }
+}
+
+/* Slow drift for the hero grid backdrop. GPU-cheap transform-only. */
+@keyframes gridDrift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 56px 56px;
+  }
+}
+
+/* Ambient atmosphere: ultra-slow aurora drift for background blobs. */
+@keyframes auraA {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3rem, -2rem, 0) scale(1.08);
+  }
+}
+
+@keyframes auraB {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-2.5rem, 2rem, 0) scale(0.94);
+  }
+}
+
+/* Status badge pulse: a calm breathing dot, not an alarm. */
+@keyframes breatheDot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45);
+  }
+  70% {
+    opacity: 0.85;
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+  }
+}
+
+/* Scroll indicator: a quiet line that descends and fades. */
+@keyframes scrollHint {
+  0% {
+    transform: translateY(0) scaleY(0);
+    opacity: 0;
+  }
+  35% {
+    transform: translateY(0) scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%) scaleY(0.4);
+    opacity: 0;
+  }
+}
+
+/* Preloader: wordmark letters rise into place. */
+@keyframes letterUp {
+  from {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Preloader: the accent hairline fills left to right. */
+@keyframes lineFill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Mobile nav: links cascade in from the right. */
+@keyframes navLinkIn {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Skills: chips cascade into the panel. */
+@keyframes chipIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -246,7 +356,7 @@
     line-height: 1.6;
   }
 
-  /* Typography baseline — every heading uses TOKENS §2.2 tokens via classes. */
+  /* Typography baseline: every heading uses TOKENS §2.2 tokens via classes. */
   h1,
   h2,
   h3,
@@ -263,7 +373,7 @@
     color: var(--text-primary);
   }
 
-  /* Focus ring (a11y) — never hidden (UX_PRINCIPLES §5.2) */
+  /* Focus ring (a11y): never hidden (UX_PRINCIPLES §5.2) */
   :focus-visible {
     outline: var(--a11y-focus-ring);
     outline-offset: var(--a11y-focus-offset);
@@ -277,15 +387,16 @@
 }
 
 /* ============================================================================
- * Utilities — reading width, prose, motion overrides
+ * Utilities: reading width, prose, motion overrides
  * ============================================================================ */
 @layer utilities {
   /* Reading width for body paragraphs (TOKENS §2.3) */
   .reading-width {
     max-width: 65ch;
+    text-wrap: pretty;
   }
 
-  /* Container utility — centralises the layout shell */
+  /* Container utility: centralises the layout shell */
   .container-page {
     max-width: var(--container-max);
     margin-inline: auto;
@@ -334,7 +445,7 @@
     }
   }
 
-  /* Eyebrow label — uppercase, tracked, caption size */
+  /* Eyebrow label: uppercase, tracked, caption size */
   .eyebrow {
     font-size: var(--text-eyebrow);
     line-height: var(--text-eyebrow--line-height);
@@ -344,7 +455,7 @@
     color: var(--accent-primary);
   }
 
-  /* Skip-to-content — UX_PRINCIPLES §5.2 */
+  /* Skip-to-content: UX_PRINCIPLES §5.2 */
   .skip-link {
     position: absolute;
     inset-inline-start: var(--space-4);
@@ -375,52 +486,240 @@
     }
   }
 
-  /* Responsive typography — fluid clamp for type scale (TOKENS §2.4) */
+  /* Responsive typography: fluid clamp for type scale (TOKENS §2.4).
+     Headings balance their lines for a calmer, more editorial rhythm. */
   .text-display-xl {
-    font-size: clamp(3.5rem, 4vw + 1rem, 4.5rem);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
+    font-size: clamp(3rem, 6.5vw + 1rem, 6.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
     font-weight: 600;
+    text-wrap: balance;
   }
 
   .text-display-lg {
-    font-size: clamp(2.75rem, 3vw + 1rem, 3.5rem);
-    line-height: 1.1;
-    letter-spacing: -0.025em;
+    font-size: clamp(2.5rem, 5vw + 1rem, 5rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
     font-weight: 600;
+    text-wrap: balance;
   }
 
   .text-display-md {
-    font-size: clamp(2.25rem, 2vw + 1rem, 2.75rem);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    font-size: clamp(2.125rem, 3.6vw + 1rem, 3.75rem);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
     font-weight: 600;
+    text-wrap: balance;
   }
 
   .text-h1 {
-    font-size: clamp(1.875rem, 1.5vw + 1rem, 2.25rem);
-    line-height: 1.2;
-    letter-spacing: -0.015em;
+    font-size: clamp(1.875rem, 2.6vw + 1rem, 3rem);
+    line-height: 1.12;
+    letter-spacing: -0.024em;
     font-weight: 600;
+    text-wrap: balance;
   }
 
   .text-h2 {
-    font-size: clamp(1.5rem, 1vw + 1rem, 1.875rem);
-    line-height: 1.25;
-    letter-spacing: -0.01em;
+    font-size: clamp(1.5rem, 2vw + 1rem, 2.375rem);
+    line-height: 1.18;
+    letter-spacing: -0.018em;
     font-weight: 600;
+    text-wrap: balance;
   }
 
   .text-h3 {
-    font-size: clamp(1.25rem, 0.5vw + 1rem, 1.5rem);
-    line-height: 1.3;
-    letter-spacing: -0.005em;
+    font-size: clamp(1.25rem, 1vw + 1rem, 1.75rem);
+    line-height: 1.28;
+    letter-spacing: -0.012em;
     font-weight: 600;
+    text-wrap: balance;
   }
 
   .text-h4 {
-    font-size: clamp(1.125rem, 0.25vw + 1rem, 1.25rem);
+    font-size: clamp(1.125rem, 0.4vw + 1rem, 1.375rem);
     line-height: 1.4;
     font-weight: 600;
   }
+
+  /* Editorial serif: narrative accents in headings and chapter numbers.
+     Used sparingly so the sans voice stays dominant (V5 design direction). */
+  .text-serif-display {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  .text-serif-display-italic {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* ============================================================================
+ * Custom utilities (Tailwind v4 @utility: work with variants like hover:)
+ * --------------------------------------------------------------------------
+ * Duration classes map the TOKENS.md §6 motion durations. Tailwind v4 has no
+ * built-in named durations, so these make `duration-fast` etc. real utilities.
+ * ============================================================================ */
+@utility duration-fast {
+  transition-duration: var(--motion-fast);
+}
+
+@utility duration-normal {
+  transition-duration: var(--motion-normal);
+}
+
+@utility duration-slow {
+  transition-duration: var(--motion-slow);
+}
+
+@utility duration-deliberate {
+  transition-duration: var(--motion-deliberate);
+}
+
+/* Film grain: tiny SVG noise tile, tiled across the viewport. Sub-perceptual
+   opacity at the component level. Adds documentary texture, zero JS. */
+@utility bg-film-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* Soft radial glow: used behind the hero. Subtle gradient, per design direction. */
+@utility bg-radial-glow {
+  background-image: radial-gradient(
+    ellipse 80% 55% at 50% -8%,
+    rgba(16, 185, 129, 0.14),
+    transparent 62%
+  );
+}
+
+/* Fine grid pattern: decorative hero backdrop (drawn with borders, not images). */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 0%,
+    black 30%,
+    transparent 75%
+  );
+}
+
+/* Gradient text: a single meaningful accent word in display headlines. */
+@utility text-gradient {
+  background-image: linear-gradient(
+    100deg,
+    var(--accent-primary) 0%,
+    var(--accent-secondary) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Cinematic vignette: gently darkens the frame edges, directing the eye
+   toward content. Applied on top of the atmosphere, never over text. */
+@utility bg-vignette {
+  background: radial-gradient(
+    ellipse 120% 90% at 50% 40%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.38) 100%
+  );
+}
+
+/* Custom cursor mode: when active, hide the native cursor (fine pointers
+   only, set by the CustomCursor component; reduced motion keeps it off). */
+@utility cursor-premium {
+  cursor: none;
+}
+
+/* Text-entry fields keep the native I-beam: the custom cursor hides itself
+   over them instead (CustomCursor). Restore the native cursor there too,
+   otherwise `cursor: none` from html would hide it and leave no cursor at all. */
+.cursor-premium,
+.cursor-premium a,
+.cursor-premium button,
+.cursor-premium [role="button"],
+.cursor-premium label {
+  cursor: none;
+}
+
+.cursor-premium input,
+.cursor-premium textarea,
+.cursor-premium select,
+.cursor-premium [contenteditable="true"] {
+  cursor: auto;
+}
+
+@utility animate-aura-a {
+  animation: auraA 26s ease-in-out infinite;
+}
+
+@utility animate-aura-b {
+  animation: auraB 32s ease-in-out infinite;
+}
+
+@utility animate-breathe-dot {
+  animation: breatheDot 2.4s ease-in-out infinite;
+}
+
+@utility animate-scroll-hint {
+  animation: scrollHint 2.6s var(--ease-emphasized) infinite;
+}
+
+@utility animate-letter-up {
+  animation: letterUp 0.6s var(--ease-emphasized) both;
+}
+
+@utility animate-line-fill {
+  animation: lineFill 0.9s var(--ease-emphasized) 0.15s both;
+}
+
+/* Button shine: a soft light sweep across primary CTAs on hover. */
+@utility btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-130%);
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.16) 50%,
+    transparent 60%
+  );
+  transition: transform 0.7s var(--ease-emphasized);
+  pointer-events: none;
+}
+
+.btn-shine:hover::after {
+  transform: translateX(130%);
+}
+
+/* ============================================================================
+ * Lenis smooth scroll: recommended base styles.
+ * ============================================================================ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }

@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Skeleton — loading state that matches the shape of final content.
+ * Skeleton: loading state that matches the shape of final content.
  *
  * Spec: COMPONENTS.md §16.
  * - Honors prefers-reduced-motion (handled in globals.css).

@@ -1,50 +1,53 @@
 /**
  * Single source of truth for site-wide identity, navigation, and metadata.
- * Per D-008 the primary CTA is "Book a Discovery Call" — exact phrasing, no variants.
- * Per PHASE_1_IA §1 D3 the domain is `https://elion.ai` placeholder.
- * Per D-012 the nav is structured to grow a "Products" item without redesign.
+ *
+ * Personal portfolio for Awodeyi Ayoolamikun.
+ * All user-editable values live here: swap links/content without touching components.
  */
 
 /** Canonical site URL. Single source of truth for OG, sitemap, canonicals. */
-export const SITE_URL = "https://elion.ai" as const;
+export const SITE_URL = "https://ayoola.dev" as const;
 
-/** Brand wordmark. Lowercase per BRAND §7. */
-export const SITE_NAME = "elion" as const;
+/** Brand wordmark. Rendered in its natural case by the Logo component. */
+export const SITE_NAME = "Awodeyi Ayoolamikun" as const;
 
-/** Long-form brand name. Used in titles, schema.org, footer. */
-export const SITE_NAME_LONG = "Elion" as const;
+/** Long-form name. Used in titles, schema.org, footer. */
+export const SITE_NAME_LONG = "Awodeyi Ayoolamikun" as const;
 
-/** Long-term positioning tagline per D-012 — used in footer. */
+/** Display name used in page titles. */
+export const SITE_NAME_SHORT = "Awodeyi Ayoolamikun" as const;
+
+/** One-line role descriptor. */
+export const ROLE = "Software Engineer & AI Automation Builder" as const;
+
+/** Long-term positioning tagline: used in footer. */
 export const SITE_TAGLINE =
-  "A technology company building systems for growing businesses." as const;
+  "Building software, AI automation, and intelligent systems that solve real problems." as const;
 
-/** Author/Organisation. */
-export const SITE_AUTHOR = "Elion" as const;
+/** Author. */
+export const SITE_AUTHOR: typeof SITE_NAME_LONG = SITE_NAME_LONG;
 
-/** Locale. English-only for V1 (PHASE_1_IA §1 D6). */
+/** Locale. English-only for V1. */
 export const SITE_LOCALE = "en" as const;
 
-/** Position statement (anchor for every page per D-014). */
+/** Position statement (anchor for the homepage hero). */
 export const POSITIONING_STATEMENT =
-  "We help growing businesses do more with the team they already have by designing automation, custom software, and AI systems that remove operational friction." as const;
+  "I build real products: full-stack web apps, AI automation systems, and intelligent business platforms that solve difficult technical problems." as const;
 
-/** Primary CTA — exact phrasing per D-008. */
-export const PRIMARY_CTA_LABEL = "Book a Discovery Call" as const;
+/** Primary CTA: used in header + mobile nav + contact sections. */
+export const PRIMARY_CTA_LABEL = "Get in touch" as const;
 
-/** Contact route — the CTA routes here. */
+/** Contact route: the CTA routes here. */
 export const CONTACT_ROUTE = "/contact" as const;
 
-/** External booking link (placeholder — replace with Cal.com / Calendly URL when ready). */
-export const BOOKING_URL = "https://cal.com/elion/discovery" as const;
-
-/** Social & direct-contact handles. */
+/** Social & direct-contact handles: real addresses as of Session 5. */
 export const SOCIAL = {
-  email: "hello@elion.ai",
-  linkedin: "https://www.linkedin.com/company/elion/",
-  github: "https://github.com/elion",
+  email: "awodeyiayoola@gmail.com",
+  linkedin: "https://www.linkedin.com/in/awodeyi-ayoolamikun-a0b5661a9/",
+  github: "https://github.com/Ayoolaxrp",
 } as const;
 
-/** Primary navigation. Five items per UX_PRINCIPLES §3.1 (max). D-012 reserves capacity for Products. */
+/** Primary navigation. Four items for a portfolio. */
 export interface NavItem {
   label: string;
   href: string;
@@ -54,37 +57,52 @@ export interface NavItem {
 export const PRIMARY_NAV: readonly NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
+/** Homepage section anchors: used by What I Build cards to link down the page. */
+export const SECTION_ANCHORS = {
+  whatIBuild: "/#what-i-build",
+  projects: "/#projects",
+  skills: "/#skills",
+  experience: "/#experience",
+  contact: "/#contact",
+} as const;
+
 /**
- * Footer column nav. Three columns per PHASE_3_LAYOUTS §14.
- * Future capacity: gains Resources column and Products link without restructuring.
+ * Footer column nav.
+ * - Explore: main pages
+ * - Focus: what I build (anchors into the homepage)
+ * - Connect: direct contact
  */
 export const FOOTER_NAV = {
-  company: [
+  explore: [
+    { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Projects", href: "/projects" },
     { label: "Contact", href: "/contact" },
   ],
-  services: [
+  focus: [
     {
-      label: "Workflow automation",
-      href: "/services/workflow-automation",
+      label: "AI Automation Systems",
+      href: SECTION_ANCHORS.whatIBuild,
     },
     {
-      label: "Internal business systems",
-      href: "/services/internal-business-systems",
+      label: "Full-Stack Development",
+      href: SECTION_ANCHORS.whatIBuild,
     },
     {
-      label: "AI assistants & dashboards",
-      href: "/services/ai-assistants-and-dashboards",
+      label: "Trading & Financial Tools",
+      href: SECTION_ANCHORS.whatIBuild,
+    },
+    {
+      label: "Internal Business Platforms",
+      href: SECTION_ANCHORS.whatIBuild,
     },
   ],
   connect: [
-    { label: "hello@elion.ai", href: "mailto:hello@elion.ai", external: true },
+    { label: SOCIAL.email, href: `mailto:${SOCIAL.email}`, external: true },
     {
       label: "LinkedIn",
       href: SOCIAL.linkedin,
@@ -100,7 +118,7 @@ export const FOOTER_NAV = {
 
 /** Default page metadata. */
 export const DEFAULT_METADATA = {
-  title: `${SITE_NAME_LONG} — Systems that remove operational friction`,
+  title: `${SITE_NAME_SHORT} · ${ROLE}`,
   description: POSITIONING_STATEMENT,
   siteUrl: SITE_URL,
   siteName: SITE_NAME_LONG,

@@ -2,15 +2,15 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Card — base container for grouping content.
+ * Card: base container for grouping content.
  *
  * Spec: COMPONENTS.md §7.
  * - bg.surface, border.subtle, radius.lg, padding.space.6
  *
  * Variants:
- * - default — flat
- * - interactive — hover lifts shadow
- * - accent — border.accent + optional glow
+ * - default: flat
+ * - interactive: hover lifts shadow
+ * - accent: border.accent + optional glow
  *
  * Accessibility:
  * - Clickable cards MUST wrap content in <a>, not nest.
@@ -45,7 +45,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
 Card.displayName = "Card";
 
 /**
- * CardHeader / CardBody / CardFooter — optional semantic slots.
+ * CardHeader / CardBody / CardFooter: optional semantic slots.
  * Use when a card needs structured composition. Plain <div> otherwise.
  */
 export const CardBody = React.forwardRef<

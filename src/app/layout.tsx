@@ -1,10 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 
 import { SiteHeader } from "@/components/chrome/site-header";
 import { SiteFooter } from "@/components/chrome/site-footer";
 import { SkipLink } from "@/components/chrome/skip-link";
+import { Atmosphere } from "@/components/anim/atmosphere";
+import { CustomCursor } from "@/components/anim/custom-cursor";
+import { Preloader } from "@/components/anim/preloader";
+import { SmoothScroll } from "@/components/anim/smooth-scroll";
+import { ScrollProgress } from "@/components/anim/scroll-progress";
 
 import {
   DEFAULT_METADATA,
@@ -13,7 +18,9 @@ import {
 } from "@/config/site.config";
 
 /* --------------------------------------------------------------------------
- * Fonts (BRAND §2.1, TOKENS §2.1) — Inter + JetBrains Mono via next/font.
+ * Fonts (BRAND §2.1, TOKENS §2.1): Inter + JetBrains Mono via next/font.
+ * Newsreader is the editorial serif used for narrative accents (V5 design
+ * direction: documentary pacing, serif for story, sans for information).
  * Self-hosted by Next.js; preloaded; no FOIT.
  * ------------------------------------------------------------------------ */
 const inter = Inter({
@@ -27,6 +34,14 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
+  weight: ["400", "500", "600"],
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  variable: "--font-newsreader",
+  display: "swap",
+  style: ["normal", "italic"],
   weight: ["400", "500", "600"],
 });
 
@@ -44,13 +59,16 @@ export const metadata: Metadata = {
   authors: [{ name: DEFAULT_METADATA.author }],
   generator: "Next.js",
   keywords: [
-    "operations automation",
+    "Awodeyi Ayoolamikun",
+    "software engineer",
+    "AI automation",
+    "full-stack developer",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Elion",
     "workflow automation",
-    "internal business systems",
-    "AI assistants",
-    "dashboards",
-    "growing businesses",
-    "technology partner",
+    "trading technology",
   ],
   referrer: "origin-when-cross-origin",
   creator: DEFAULT_METADATA.author,
@@ -109,12 +127,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${inter.variable} ${jetbrainsMono.variable} ${newsreader.variable}`}
       suppressHydrationWarning
     >
       <body className="bg-canvas text-text-primary antialiased">
+        <Atmosphere />
+        <CustomCursor />
+        <SmoothScroll />
+        <ScrollProgress />
         <SkipLink />
-        <div className="flex min-h-dvh flex-col">
+        <Preloader />
+        <div className="relative flex min-h-dvh flex-col">
           <SiteHeader />
           <main id="main-content" className="flex-1">
             {children}

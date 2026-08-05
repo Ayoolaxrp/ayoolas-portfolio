@@ -1,9 +1,13 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/ui/container";
+import { handleHashHref } from "@/lib/scroll";
 import { Logo } from "./logo";
+import { BackToTop } from "./back-to-top";
 import { FOOTER_NAV, SITE_NAME_LONG, SITE_TAGLINE } from "@/config/site.config";
 
 /**
@@ -34,7 +38,7 @@ const GitHubIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 /**
- * SiteFooter — site footer with secondary navigation (COMPONENTS §9).
+ * SiteFooter: site footer with secondary navigation (COMPONENTS §9).
  *
  * Spec:
  * - Logo + long-term tagline (D-012) on top.
@@ -53,7 +57,7 @@ export const SiteFooter: React.FC = () => {
   return (
     <footer className="bg-surface py-20">
       <Container>
-        {/* Top — logo + tagline */}
+        {/* Top: logo + tagline */}
         <div className="flex flex-col gap-8 border-b border-border-subtle pb-12 md:flex-row md:items-start md:justify-between">
           <div className="flex flex-col gap-3">
             <Logo href="/" size="md" />
@@ -64,9 +68,9 @@ export const SiteFooter: React.FC = () => {
         </div>
 
         {/* Columns */}
-        <div className="grid grid-cols-1 gap-8 py-12 md:grid-cols-3 md:gap-12">
-          <FooterColumn title="Company" items={FOOTER_NAV.company} />
-          <FooterColumn title="Services" items={FOOTER_NAV.services} />
+        <div className="grid grid-cols-1 gap-8 py-12 sm:grid-cols-2 md:grid-cols-3 md:gap-12">
+          <FooterColumn title="Explore" items={FOOTER_NAV.explore} />
+          <FooterColumn title="Focus" items={FOOTER_NAV.focus} />
           <FooterColumn
             title="Connect"
             items={FOOTER_NAV.connect}
@@ -85,16 +89,17 @@ export const SiteFooter: React.FC = () => {
           <div className="flex items-center gap-6 text-body-sm text-text-tertiary">
             <Link
               href="/privacy"
-              className="hover:text-text-secondary focus-visible:text-text-secondary"
+              className="transition-colors duration-fast ease-standard hover:text-text-secondary focus-visible:text-text-secondary"
             >
               Privacy
             </Link>
             <Link
               href="/terms"
-              className="hover:text-text-secondary focus-visible:text-text-secondary"
+              className="transition-colors duration-fast ease-standard hover:text-text-secondary focus-visible:text-text-secondary"
             >
               Terms
             </Link>
+            <BackToTop />
           </div>
         </div>
       </Container>
@@ -138,6 +143,7 @@ const FooterColumn: React.FC<FooterColumnProps> = ({
               {...(isExternal && !isEmail
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
+              onClick={(event) => handleHashHref(event, item.href)}
               className={cn(
                 "inline-flex items-center gap-2 text-body-sm text-text-secondary",
                 "transition-colors duration-fast ease-standard",

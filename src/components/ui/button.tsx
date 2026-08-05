@@ -6,7 +6,7 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * Button — primary call-to-action trigger.
+ * Button: primary call-to-action trigger.
  *
  * Spec: COMPONENTS.md §1.
  * - 4 variants: primary, secondary, ghost, link
@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils";
  */
 export const buttonVariants = cva(
   [
-    // Base — every button shares this.
+    // Base: every button shares this.
     "inline-flex items-center justify-center gap-2",
     "rounded-md font-medium",
     "transition-[background-color,border-color,box-shadow,color] duration-fast ease-standard",
@@ -38,7 +38,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary: [
-          "bg-accent text-text-inverse",
+          "bg-accent text-text-inverse btn-shine",
           "hover:bg-accent-hover",
           "active:bg-accent-pressed active:scale-[0.98]",
           "disabled:bg-subtle disabled:text-text-disabled",
@@ -80,6 +80,16 @@ export const buttonVariants = cva(
   },
 );
 
+/**
+ * Radix Slot typed as a button element. At runtime Slot simply forwards its
+ * props onto its child element, so the native button attrs we forward
+ * (disabled, aria-busy, className) type-check cleanly here.
+ */
+const SlotButton = Slot as unknown as React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<"button"> &
+    React.RefAttributes<HTMLButtonElement>
+>;
+
 export interface ButtonProps
   extends
     React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -91,9 +101,9 @@ export interface ButtonProps
   asChild?: boolean;
   /** Shows a spinner and disables interaction. Announces via aria-busy. */
   loading?: boolean;
-  /** Leading icon — render as a React node, sized automatically. */
+  /** Leading icon: render as a React node, sized automatically. */
   leadingIcon?: React.ReactNode;
-  /** Trailing icon — render as a React node, sized automatically. */
+  /** Trailing icon: render as a React node, sized automatically. */
   trailingIcon?: React.ReactNode;
 }
 
@@ -115,14 +125,47 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const Comp = asChild ? Slot : "button";
     const isDisabled = disabled || loading;
 
+    // asChild: render the child element itself (typically a Link) and inject
+    // the spinner/icons INTO it via cloneElement. Wrapping in a Fragment would
+    // make the Fragment Slot's direct child, which Slot clones with every
+    // Button prop: React rejects that ("Invalid prop `type` supplied to
+    // React.Fragment").
+    if (asChild) {
+      const child = React.Children.only(children) as React.ReactElement<{
+        children?: React.ReactNode;
+      }>;
+      const injected: React.ReactNode[] = loading
+        ? [
+            <Loader2 key="spinner" className="animate-spin" aria-hidden />,
+            <span key="sr" className="sr-only">
+              Loading
+            </span>,
+            child.props.children,
+          ]
+        : [leadingIcon, child.props.children, trailingIcon].filter(Boolean);
+
+      return (
+        <SlotButton
+          ref={ref as React.Ref<HTMLButtonElement>}
+          disabled={isDisabled}
+          aria-busy={loading || undefined}
+          className={cn(
+            buttonVariants({ variant, size, fullWidth }),
+            className,
+          )}
+          {...props}
+        >
+          {React.cloneElement(child, undefined, ...injected)}
+        </SlotButton>
+      );
+    }
+
     return (
-      <Comp
-        ref={ref as React.Ref<HTMLButtonElement>}
-        // Slot forwards type; for native <button>, default to "button".
-        type={asChild ? undefined : (type ?? "button")}
+      <button
+        ref={ref}
+        type={type ?? "button"}
         disabled={isDisabled}
         aria-busy={loading || undefined}
         className={cn(buttonVariants({ variant, size, fullWidth }), className)}
@@ -141,7 +184,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             {trailingIcon}
           </>
         )}
-      </Comp>
+      </button>
     );
   },
 );

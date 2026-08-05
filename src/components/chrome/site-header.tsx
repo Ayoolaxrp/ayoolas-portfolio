@@ -17,33 +17,23 @@ import {
 } from "@/config/site.config";
 
 /**
- * SiteHeader — sticky top nav (COMPONENTS §8).
+ * SiteHeader: static header at the very top of the page.
  *
  * Behavior:
- * - Transparent at top of page (PHASE_3_LAYOUTS §1).
- * - Adds blurred bg + border-bottom after >16px scroll.
- * - Logo (left) → primary nav (center, hidden on mobile) → CTA (right).
- * - Mobile: hamburger triggers MobileNav drawer.
+ * - Lives in normal document flow: it scrolls away with the page and never
+ *   stays pinned over content, so nothing is ever covered or overlapped.
+ * - Nav links carry an animated accent underline; the active link keeps it.
+ * - The primary CTA is magnetic (custom cursor pulls toward it).
+ * - Mobile: hamburger opens the MobileNav drawer.
  *
  * Accessibility:
- * - <nav> semantic.
- * - Active link styled with text.accent (visual only — aria-current="page").
- * - Persistent CTA always within reach (D-008).
+ * - <nav> semantic; active link uses aria-current="page".
+ * - Visible focus rings; all icon buttons labelled.
  */
 export const SiteHeader: React.FC = () => {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Close the mobile drawer when navigation happens. Implemented as an event
-  // handler on each link (see handleNavigate) so we don't need a setState effect.
   const handleNavigate = React.useCallback(() => {
     setMobileOpen(false);
   }, []);
@@ -55,49 +45,50 @@ export const SiteHeader: React.FC = () => {
 
   return (
     <>
-      <header
-        className={cn(
-          "sticky top-0 z-sticky",
-          "transition-[background-color,backdrop-filter,border-color] duration-normal ease-standard",
-          scrolled
-            ? "bg-overlay backdrop-blur-md border-b border-border-subtle"
-            : "bg-transparent border-b border-transparent",
-        )}
-      >
+      {/* A solid bar in normal flow: present only at the top of the page,
+          never pinned over content while scrolling. */}
+      <header className="border-b border-border-subtle bg-canvas">
         <Container>
-          <div className="flex h-16 items-center justify-between gap-4 md:h-16">
-            <Logo href="/" size="md" />
+          <div className="flex h-16 items-center justify-between gap-4 md:h-20">
+            {/* Logo is responsive: compact on small screens so the full name
+                never crowds the hamburger, full size from md up. */}
+            <Logo href="/" size="sm" className="md:text-xl" />
 
             {/* Desktop nav */}
             <nav
-              className="hidden md:flex md:items-center md:gap-8"
+              className="hidden md:flex md:items-center md:gap-9"
               aria-label="Primary"
             >
-              {PRIMARY_NAV.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={handleNavigate}
-                  aria-current={isActive(item.href) ? "page" : undefined}
-                  className={cn(
-                    "text-body-sm font-medium transition-colors duration-fast ease-standard",
-                    "hover:text-text-primary",
-                    "focus-visible:outline-none focus-visible:text-accent",
-                    isActive(item.href)
-                      ? "text-text-primary"
-                      : "text-text-secondary",
-                  )}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {PRIMARY_NAV.map((item) => {
+                const active = isActive(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={handleNavigate}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "group relative inline-flex items-center gap-1.5 text-body-sm font-medium",
+                      "transition-colors duration-fast ease-standard hover:text-text-primary",
+                      active ? "text-text-primary" : "text-text-secondary",
+                      "after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-accent after:transition-transform after:duration-normal after:ease-standard",
+                      "hover:after:origin-left hover:after:scale-x-100",
+                      active &&
+                        "after:origin-left after:scale-x-100 after:bg-gradient-to-r after:from-accent after:to-accent-secondary",
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5 md:gap-3">
               <Button
                 asChild
                 size="sm"
                 variant="primary"
+                data-magnetic
                 className="hidden md:inline-flex"
               >
                 <Link href={CONTACT_ROUTE} onClick={handleNavigate}>

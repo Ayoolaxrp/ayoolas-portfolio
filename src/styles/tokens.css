@@ -1,5 +1,5 @@
 /* ============================================================================
- * Elion — Design Tokens (CSS variables)
+ * Elion: Design Tokens (CSS variables)
  * Source of truth: TOKENS.md in /elion-website/docs.
  * Every value used in components lives here. No hardcoded values in components.
  * Dark-mode only in V1 (D-004).
@@ -8,35 +8,36 @@
 :root {
   /* --------------------------------------------------------------------------
    * Surface hierarchy (TOKENS §1.1)
+   * V5: deepened near-black canvas for a more cinematic, documentary feel.
    * ------------------------------------------------------------------------ */
-  --bg-canvas: #0b0f14;
-  --bg-surface: #111827;
-  --bg-surface-raised: #1a2233;
-  --bg-surface-sunken: #070a0f;
-  --bg-overlay: rgba(11, 15, 20, 0.72);
-  --bg-subtle: #0f1620;
+  --bg-canvas: #05070b;
+  --bg-surface: #0b1017;
+  --bg-surface-raised: #121926;
+  --bg-surface-sunken: #030407;
+  --bg-overlay: rgba(5, 7, 11, 0.72);
+  --bg-subtle: #0a0f17;
 
   /* --------------------------------------------------------------------------
    * Borders (TOKENS §1.2)
    * ------------------------------------------------------------------------ */
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-default: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.16);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-default: rgba(255, 255, 255, 0.11);
+  --border-strong: rgba(255, 255, 255, 0.18);
   --border-accent: #10b981;
 
   /* --------------------------------------------------------------------------
    * Text (TOKENS §1.3)
    * ------------------------------------------------------------------------ */
-  --text-primary: #f5f7fa;
-  --text-secondary: #a8b0bd;
-  --text-tertiary: #6b7280;
-  --text-disabled: #4b5563;
-  --text-inverse: #0b0f14;
+  --text-primary: #f6f8fb;
+  --text-secondary: #a6aebb;
+  --text-tertiary: #667085;
+  --text-disabled: #475467;
+  --text-inverse: #05070b;
   --text-link: #60a5fa;
   --text-link-hover: #93c5fd;
 
   /* --------------------------------------------------------------------------
-   * Accent — Emerald primary (TOKENS §1.4)
+   * Accent: Emerald primary (TOKENS §1.4)
    * ------------------------------------------------------------------------ */
   --accent-primary: #10b981;
   --accent-primary-hover: #34d399;
@@ -45,14 +46,14 @@
   --accent-primary-border: rgba(16, 185, 129, 0.32);
 
   /* --------------------------------------------------------------------------
-   * Accent — Soft Blue secondary (TOKENS §1.5)
+   * Accent: Soft Blue secondary (TOKENS §1.5)
    * ------------------------------------------------------------------------ */
   --accent-secondary: #3b82f6;
   --accent-secondary-hover: #60a5fa;
   --accent-secondary-soft: rgba(59, 130, 246, 0.12);
 
   /* --------------------------------------------------------------------------
-   * Status — semantic (TOKENS §1.6)
+   * Status: semantic (TOKENS §1.6)
    * ------------------------------------------------------------------------ */
   --status-success: #10b981;
   --status-success-soft: rgba(16, 185, 129, 0.1);
@@ -67,19 +68,19 @@
    * Focus (TOKENS §1.7)
    * ------------------------------------------------------------------------ */
   --focus-ring: #10b981;
-  --focus-ring-offset: #0b0f14;
+  --focus-ring-offset: #05070b;
 
   /* --------------------------------------------------------------------------
    * Icon (TOKENS §1.8)
    * ------------------------------------------------------------------------ */
-  --icon-primary: #f5f7fa;
-  --icon-secondary: #a8b0bd;
-  --icon-tertiary: #6b7280;
+  --icon-primary: #f6f8fb;
+  --icon-secondary: #a6aebb;
+  --icon-tertiary: #667085;
   --icon-accent: #10b981;
-  --icon-disabled: #4b5563;
+  --icon-disabled: #475467;
 
   /* --------------------------------------------------------------------------
-   * Spacing (TOKENS §3) — 4px base
+   * Spacing (TOKENS §3): 4px base
    * ------------------------------------------------------------------------ */
   --space-0: 0;
   --space-1: 0.25rem; /* 4px */
@@ -114,7 +115,7 @@
   --radius-full: 9999px;
 
   /* --------------------------------------------------------------------------
-   * Shadows (TOKENS §5) — dark-mode calibrated
+   * Shadows (TOKENS §5): dark-mode calibrated
    * ------------------------------------------------------------------------ */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.32);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);

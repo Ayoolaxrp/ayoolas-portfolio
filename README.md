@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Elion — Personal Portfolio
 
-## Getting Started
+Personal portfolio site for **Awodeyi Ayoolamikun** — built with **Next.js 16** + **Tailwind CSS v4** + **Motion** + **GSAP**.
 
-First, run the development server:
+🌐 **Live site:** https://ayoolaxrp.github.io/elion-app/
+
+## Stack
+
+- **Next.js 16** (App Router, Turbopack) — static export for GitHub Pages
+- **TypeScript** + **React 19**
+- **Tailwind CSS v4** (PostCSS plugin)
+- **Motion** (`framer-motion`) for component-level animation
+- **GSAP** for cinematic section transitions
+- **Lenis** for smooth scrolling
+- **Radix UI primitives** (Slot), **class-variance-authority**, **tailwind-merge**
+
+## Local development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev          # dev server at http://localhost:3000/
+pnpm build        # static export → ./out/
+pnpm start        # serve ./out/ at http://localhost:3000/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+GitHub Actions builds the static export and deploys to GitHub Pages on every push to `master`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The workflow sets `BASE_PATH=/elion-app` before `pnpm build` so the output works under the `/elion-app/` subpath at `https://ayoolaxrp.github.io/elion-app/`.
 
-## Learn More
+See `.github/workflows/deploy.yml`.
 
-To learn more about Next.js, take a look at the following resources:
+## Project structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+.
+├── src/
+│   ├── app/                  # Next.js App Router pages
+│   │   ├── layout.tsx        # root layout, metadata, fonts
+│   │   ├── page.tsx          # homepage
+│   │   ├── about/            # /about
+│   │   ├── projects/         # /projects + /projects/[slug]
+│   │   ├── contact/          # /contact
+│   │   ├── privacy/          # /privacy
+│   │   ├── terms/            # /terms
+│   │   ├── not-found.tsx     # 404 page
+│   │   ├── robots.js         # static robots.txt (force-static)
+│   │   └── sitemap.js        # static sitemap.xml (force-static)
+│   ├── components/
+│   │   ├── sections/         # large page sections (hero, portrait, photography, etc.)
+│   │   ├── ui/               # primitives (button, input, etc.)
+│   │   └── ...
+│   ├── config/
+│   │   └── site.config.ts    # site identity, navigation, social links
+│   ├── lib/                  # data + utilities
+│   └── ...
+├── public/                   # served at site root (incl. /images/portrait.jpg)
+├── next.config.ts            # static export config
+└── pnpm-lock.yaml
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Configuration
 
-## Deploy on Vercel
+Site-wide values (name, role, tagline, nav links, social handles) live in **`src/config/site.config.ts`**. Change values there — don't edit components directly.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The canonical site URL is `https://ayoola.dev` (intended production domain). For now the live URL is the GitHub Pages one.

@@ -1,5 +1,5 @@
 /**
- * UI primitives — the 13-component V1 library per COMPONENTS.md §9.1.
+ * UI primitives: the 13-component V1 library per COMPONENTS.md §9.1.
  * Re-exported here so consumers can import from a single location.
  */
 
