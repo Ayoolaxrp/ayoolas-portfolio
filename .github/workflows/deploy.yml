@@ -32,11 +32,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build (static export, subpath /elion-app)
+      - name: Build (static export, subpath /ayoolas-portfolio)
         run: pnpm build
         env:
-          BASE_PATH: /elion-app
-          NEXT_PUBLIC_SITE_URL: https://ayoolaxrp.github.io/elion-app
+          BASE_PATH: /ayoolas-portfolio
+          NEXT_PUBLIC_SITE_URL: https://ayoolaxrp.github.io/ayoolas-portfolio
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
