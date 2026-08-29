@@ -13,6 +13,7 @@ import { ScrollProgress } from "@/components/anim/scroll-progress";
 
 import {
   DEFAULT_METADATA,
+  ROLE,
   SITE_NAME_LONG,
   SITE_URL,
 } from "@/config/site.config";
@@ -60,15 +61,17 @@ export const metadata: Metadata = {
   generator: "Next.js",
   keywords: [
     "Awodeyi Ayoolamikun",
-    "software engineer",
+    "founder",
     "AI automation",
-    "full-stack developer",
+    "systems builder",
+    "business automation",
+    "workflow automation",
     "Next.js",
     "React",
     "TypeScript",
     "Elion",
-    "workflow automation",
-    "trading technology",
+    "lead generation",
+    "intelligent systems",
   ],
   referrer: "origin-when-cross-origin",
   creator: DEFAULT_METADATA.author,
@@ -85,11 +88,20 @@ export const metadata: Metadata = {
     siteName: SITE_NAME_LONG,
     title: DEFAULT_METADATA.title,
     description: DEFAULT_METADATA.description,
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME_LONG} — ${ROLE}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: DEFAULT_METADATA.title,
     description: DEFAULT_METADATA.description,
+    images: ["/opengraph-image.png"],
   },
   robots: {
     index: true,
@@ -102,7 +114,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
 };
 

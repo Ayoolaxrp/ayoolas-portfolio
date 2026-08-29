@@ -80,8 +80,9 @@ const BUILD_AREAS: readonly BuildArea[] = [
 ];
 
 /**
- * WhatIBuild: the four things I build. Cards expand on click (accessible,
- * works with keyboard) and animate subtly on hover. GSAP Reveal staggers entry.
+ * WhatIBuild: the four things I build. The entire card is clickable to
+ * expand/collapse (accessible, works with keyboard) and animates subtly on hover.
+ * GSAP Reveal staggers entry. The "See project" link is a separate action.
  */
 export const WhatIBuild: React.FC = () => {
   const [openId, setOpenId] = React.useState<string | null>(
@@ -118,18 +119,23 @@ export const WhatIBuild: React.FC = () => {
                   id={`build-${area.id}`}
                   className={cn(
                     "group relative h-full overflow-hidden rounded-lg border bg-canvas p-8 transition-[border-color,box-shadow,transform] duration-slow ease-standard",
-                    "hover:-translate-y-1 hover:shadow-lg",
+                    "hover:-translate-y-1 hover:shadow-lg cursor-pointer",
                     isOpen
                       ? "border-accent-border shadow-glow"
                       : "border-border-subtle",
                   )}
+                  onClick={() => toggle(area.id)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      toggle(area.id);
+                    }
+                  }}
+                  aria-expanded={isOpen}
                 >
-                  <button
-                    type="button"
-                    onClick={() => toggle(area.id)}
-                    aria-expanded={isOpen}
-                    className="flex w-full flex-col gap-5 text-left"
-                  >
+                  <span className="flex w-full flex-col gap-5">
                     <span className="flex items-center justify-between">
                       <span className="flex size-12 items-center justify-center rounded-md border border-accent-border bg-accent-soft text-accent transition-transform duration-normal ease-standard group-hover:scale-105">
                         <Icon className="size-5" aria-hidden />
@@ -166,7 +172,7 @@ export const WhatIBuild: React.FC = () => {
                         </span>
                       </span>
                     </span>
-                  </button>
+                  </span>
 
                   <div
                     inert={!isOpen ? true : undefined}
@@ -190,9 +196,10 @@ export const WhatIBuild: React.FC = () => {
                     </div>
                     <Link
                       href={area.projectHref}
-                      onClick={(event) =>
-                        handleHashHref(event, area.projectHref)
-                      }
+                      onClick={(event) => {
+                        event.stopPropagation(); // Prevent card toggle
+                        handleHashHref(event, area.projectHref);
+                      }}
                       className="inline-flex items-center gap-1.5 text-body-sm text-text-link underline-offset-4 transition-colors duration-fast ease-standard hover:text-text-link-hover hover:underline"
                     >
                       See {area.projectLabel} →

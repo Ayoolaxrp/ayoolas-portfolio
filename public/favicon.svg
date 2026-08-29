@@ -1,0 +1,16 @@
+<!-- DARK THEME / APP ICON (Standard SVG) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#090D14"/>
+  
+  <!-- Right Downward Beam: Represents Automation Pipeline & "Y" Branch -->
+  <path d="M42 14 H50 L32 50 H24 Z" fill="#10B981"/>
+  
+  <!-- Left Upward Beam: Forms "A" Apex Foundation -->
+  <path d="M14 50 H22 L32 30 H24 Z" fill="#FFFFFF"/>
+  
+  <!-- Precision System Node: Central Logic Point -->
+  <polygon points="32,14 40,14 32,30 24,30" fill="#F1F5F9"/>
+  
+  <!-- System Architecture Crossbar: Terminal Logic Flow -->
+  <polygon points="20.5,38 38,38 34.5,45 17,45" fill="#38BDF8"/>
+</svg>
