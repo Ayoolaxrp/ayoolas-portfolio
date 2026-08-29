@@ -106,7 +106,7 @@ export const SiteHeader: React.FC = () => {
                   "md:hidden",
                   "h-10 w-10 p-0",
                 )}
-                variant="ghost"
+                variant="secondary"
                 size="icon"
               >
                 <Menu className="size-5" aria-hidden />
