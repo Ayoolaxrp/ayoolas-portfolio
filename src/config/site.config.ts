@@ -18,11 +18,11 @@ export const SITE_NAME_LONG = "Awodeyi Ayoolamikun" as const;
 export const SITE_NAME_SHORT = "Awodeyi Ayoolamikun" as const;
 
 /** One-line role descriptor. */
-export const ROLE = "Software Engineer & AI Automation Builder" as const;
+export const ROLE = "Founder · AI Automation & Systems Builder" as const;
 
 /** Long-term positioning tagline: used in footer. */
 export const SITE_TAGLINE =
-  "Building software, AI automation, and intelligent systems that solve real problems." as const;
+  "I build AI-powered systems and digital products that turn manual business processes into scalable workflows." as const;
 
 /** Author. */
 export const SITE_AUTHOR: typeof SITE_NAME_LONG = SITE_NAME_LONG;
@@ -31,8 +31,7 @@ export const SITE_AUTHOR: typeof SITE_NAME_LONG = SITE_NAME_LONG;
 export const SITE_LOCALE = "en" as const;
 
 /** Position statement (anchor for the homepage hero). */
-export const POSITIONING_STATEMENT =
-  "I build real products: full-stack web apps, AI automation systems, and intelligent business platforms that solve difficult technical problems." as const;
+export const POSITIONING_STATEMENT = SITE_TAGLINE;
 
 /** Primary CTA: used in header + mobile nav + contact sections. */
 export const PRIMARY_CTA_LABEL = "Get in touch" as const;
@@ -45,6 +44,7 @@ export const SOCIAL = {
   email: "awodeyiayoola@gmail.com",
   linkedin: "https://www.linkedin.com/in/awodeyi-ayoolamikun-a0b5661a9/",
   github: "https://github.com/Ayoolaxrp",
+  whatsapp: "2349126281855",
 } as const;
 
 /** Primary navigation. Four items for a portfolio. */
@@ -103,6 +103,11 @@ export const FOOTER_NAV = {
   ],
   connect: [
     { label: SOCIAL.email, href: `mailto:${SOCIAL.email}`, external: true },
+    {
+      label: "WhatsApp",
+      href: `https://wa.me/${SOCIAL.whatsapp}`,
+      external: true,
+    },
     {
       label: "LinkedIn",
       href: SOCIAL.linkedin,
