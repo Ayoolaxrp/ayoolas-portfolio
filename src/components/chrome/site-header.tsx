@@ -96,7 +96,7 @@ export const SiteHeader: React.FC = () => {
                 </Link>
               </Button>
 
-              <button
+              <Button
                 type="button"
                 onClick={() => setMobileOpen(true)}
                 aria-expanded={mobileOpen}
@@ -104,14 +104,13 @@ export const SiteHeader: React.FC = () => {
                 aria-label="Open menu"
                 className={cn(
                   "md:hidden",
-                  "inline-flex h-10 w-10 items-center justify-center rounded-md",
-                  "text-text-primary",
-                  "hover:bg-subtle",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
+                  "h-10 w-10 p-0",
                 )}
+                variant="ghost"
+                size="icon"
               >
                 <Menu className="size-5" aria-hidden />
-              </button>
+              </Button>
             </div>
           </div>
         </Container>
