@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Award, Download, Expand, X } from "lucide-react";
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 import { stopSmoothScroll, startSmoothScroll } from "@/lib/scroll";
@@ -10,6 +11,7 @@ import type { Certificate } from "@/lib/about";
 /* ----------------------------------------------------------------------------
  * CertificateImage: renders the certificate preview, falling back to an
  * elegant placeholder while the real asset is still missing.
+ * Uses next/image to handle basePath correctly for GitHub Pages subpath deployment.
  * -------------------------------------------------------------------------- */
 
 const CertificateImage: React.FC<{
@@ -44,17 +46,19 @@ const CertificateImage: React.FC<{
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element -- certificate assets are local files added later
-    <img
-      src={certificate.image}
-      alt={certificate.alt}
-      loading="lazy"
-      onError={markFailed}
-      className={cn(
-        "aspect-[4/3] w-full object-cover transition-transform duration-slow ease-emphasized group-hover:scale-[1.03]",
-        className,
-      )}
-    />
+    <div className={cn("relative aspect-[4/3] w-full overflow-hidden", className)}>
+      <Image
+        src={certificate.image}
+        alt={certificate.alt}
+        fill
+        loading="lazy"
+        onError={markFailed}
+        className={cn(
+          "object-cover transition-transform duration-slow ease-emphasized group-hover:scale-[1.03]",
+        )}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      />
+    </div>
   );
 };
 
@@ -150,12 +154,13 @@ const LightboxPreview: React.FC<{ certificate: Certificate }> = ({
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element -- certificate assets are local files added later
-    <img
+    <Image
       src={certificate.image}
       alt={certificate.alt}
       onError={() => setImageFailed(true)}
       className="max-h-[70vh] w-auto max-w-full rounded-md border border-border-default object-contain shadow-lg"
+      width={800}
+      height={600}
     />
   );
 };

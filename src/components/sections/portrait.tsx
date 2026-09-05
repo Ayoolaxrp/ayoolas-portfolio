@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
@@ -15,21 +16,10 @@ export interface PortraitProps {
  * Portrait: the actual profile photo. Shows a styled placeholder until the
  * image at `src` loads successfully, then fades it in. If the file is missing,
  * the placeholder stays (no broken-image icon).
- *
- * The load check is race-safe: a fast local image can finish loading before
- * React hydrates and attaches `onLoad`, so an effect also checks `complete`
- * right after mount. That covers both paths.
+ * Uses next/image to handle basePath correctly for GitHub Pages subpath deployment.
  */
 export const Portrait: React.FC<PortraitProps> = ({ src, alt, className }) => {
-  const imgRef = React.useRef<HTMLImageElement>(null);
   const [loaded, setLoaded] = React.useState(false);
-
-  React.useEffect(() => {
-    const img = imgRef.current;
-    if (img?.complete && img.naturalWidth > 0) {
-      setLoaded(true);
-    }
-  }, []);
 
   return (
     <div className={cn("relative h-full w-full", className)}>
@@ -48,21 +38,22 @@ export const Portrait: React.FC<PortraitProps> = ({ src, alt, className }) => {
         </span>
       </div>
 
-      {/* The real photo, layered above the fallback. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        ref={imgRef}
-        src={src}
-        alt={alt}
-        onLoad={() => setLoaded(true)}
-        onError={() => setLoaded(false)}
-        className={cn(
-          "absolute inset-0 h-full w-full object-cover transition-opacity duration-slow ease-standard",
-          loaded ? "opacity-100" : "opacity-0",
-        )}
-        loading="eager"
-        decoding="async"
-      />
+      {/* The real photo, layered above the fallback. Uses next/image for basePath handling. */}
+      <div className="relative h-full w-full">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          priority
+          onLoad={() => setLoaded(true)}
+          onError={() => setLoaded(false)}
+          className={cn(
+            "object-cover transition-opacity duration-slow ease-standard",
+            loaded ? "opacity-100" : "opacity-0",
+          )}
+          sizes="100vw"
+        />
+      </div>
     </div>
   );
 };
