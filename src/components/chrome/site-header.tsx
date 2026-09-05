@@ -3,13 +3,14 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { Menu, Sun, Moon, Monitor } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Logo } from "./logo";
 import { MobileNav } from "./mobile-nav";
+import { useTheme } from "@/components/providers/theme-provider";
 import {
   CONTACT_ROUTE,
   PRIMARY_CTA_LABEL,
@@ -33,6 +34,7 @@ import {
 export const SiteHeader: React.FC = () => {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
 
   const handleNavigate = React.useCallback(() => {
     setMobileOpen(false);
@@ -94,6 +96,23 @@ export const SiteHeader: React.FC = () => {
                 <Link href={CONTACT_ROUTE} onClick={handleNavigate}>
                   {PRIMARY_CTA_LABEL}
                 </Link>
+              </Button>
+
+              {/* Theme Toggle - Desktop */}
+              <Button
+                type="button"
+                onClick={toggleTheme}
+                aria-label={`Current theme: ${theme}. Click to cycle.`}
+                className="hidden md:inline-flex h-10 w-10 p-0"
+                variant="secondary"
+                size="icon"
+                data-magnetic
+              >
+                {resolvedTheme === "dark" ? (
+                  <Moon className="size-5" aria-hidden />
+                ) : (
+                  <Sun className="size-5" aria-hidden />
+                )}
               </Button>
 
               <Button

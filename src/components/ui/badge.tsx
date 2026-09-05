@@ -19,6 +19,7 @@ export const badgeVariants = cva(
     "text-caption",
     "font-medium uppercase",
     "border",
+    "touch-target",
   ].join(" "),
   {
     variants: {

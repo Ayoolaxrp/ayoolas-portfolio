@@ -1,5 +1,5 @@
 /**
- * Portfolio project data: full case studies for the six real projects.
+ * Portfolio project data: full case studies for the real projects.
  *
  * Honesty rules (per project brief):
  * - No fabricated users, revenue, testimonials, client results, or production metrics.
@@ -37,8 +37,11 @@ export interface ProjectArchitecture {
   deployment?: string;
   integrations?: string;
   authentication?: string;
+  authorization?: string;
   apis?: string;
   workflows?: string;
+  styling?: string;
+  data?: string;
 }
 
 export interface ProjectMetric {
@@ -77,106 +80,6 @@ export interface Project {
 }
 
 export const PROJECTS: readonly Project[] = [
-  {
-    slug: "email-automation-platform",
-    title: "Email Automation Platform",
-    status: "≈90% complete",
-    tone: "warning",
-    summary:
-      "End-to-end outbound email automation with lead discovery, qualification, verification, and campaign analytics.",
-    overview:
-      "An end-to-end outbound email automation platform built to automate the entire outreach pipeline: discovering leads, qualifying them, verifying companies and contacts, enriching profiles, scheduling campaigns, and managing SMTP delivery. Built over weeks of iteration and testing, it treats data quality as a first-class feature.",
-    problem:
-      "Outbound teams burn hours finding and validating leads before they can send a single email. Most data is stale or unverified, so campaigns underperform and deliverability suffers.",
-    goals: [
-      "Automate the full outreach pipeline from discovery to send.",
-      "Keep verification quality high at every stage so campaigns send to real, reachable contacts.",
-      "Give the operator one dashboard for campaigns, analytics, and SMTP health.",
-    ],
-    role: "Designed the architecture and built the platform end to end: data pipeline, campaign automation, dashboard, and SMTP management.",
-    research:
-      "The first step was mapping the manual outreach workflow: where leads come from, where data goes stale, and which steps consume the most hours. That map became the pipeline: each stage exists because a manual step failed or degraded at scale.",
-    architecture: {
-      frontend:
-        "Next.js dashboard for campaigns, leads, and analytics with server-rendered views and client-side interactivity where it matters.",
-      backend:
-        "Node.js service layer orchestrating discovery, verification, enrichment, and scheduling as separate stages.",
-      database:
-        "PostgreSQL as the source of truth for leads, companies, campaigns, and delivery events.",
-      automation:
-        "Staged pipeline: discover, qualify, verify, enrich, schedule. Each stage gates on data quality before the next begins.",
-      deployment: "Cloud deployment with environment-separated configuration.",
-      integrations:
-        "SMTP providers, enrichment and verification services, campaign tooling.",
-      apis: "REST APIs between the dashboard, service layer, and data store.",
-      workflows:
-        "Scheduling and delivery workflows with retries and failure tracking.",
-    },
-    features: [
-      "Lead discovery",
-      "Lead qualification & scoring",
-      "Company verification",
-      "Contact enrichment",
-      "Campaign dashboard",
-      "Email scheduling",
-      "SMTP management",
-      "Campaign analytics",
-    ],
-    challenges: [
-      {
-        challenge:
-          "Scaling discovery volume without letting poor data into the pipeline.",
-        solution:
-          "Staged verification: every lead passes through multiple checks before it becomes campaign-ready.",
-      },
-      {
-        challenge:
-          "Building reliable company verification and contact enrichment.",
-        solution:
-          "Composed multiple data sources and verified fields against each other rather than trusting a single lookup.",
-      },
-      {
-        challenge:
-          "Iterating on scheduling and deliverability behaviour for weeks.",
-        solution:
-          "Treating the whole platform as one long iteration loop: ship, measure, refine.",
-      },
-    ],
-    lessons: [
-      "Iteration and testing matter more than initial feature breadth: weeks of refinement produced a much more reliable system.",
-      "Data quality is a feature. Verification stages pay for themselves in campaign results.",
-      "A pipeline is only as strong as its weakest stage, so gating between stages is non-negotiable.",
-    ],
-    metrics: [
-      { value: "5", label: "pipeline stages" },
-      { value: "≈90%", label: "completion" },
-      { value: "1", label: "operator dashboard" },
-    ],
-    future: [
-      "Harden SMTP deliverability monitoring and warm-up tooling.",
-      "Add team roles, campaign approvals, and multi-tenant workspaces.",
-    ],
-    technologies: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Node.js",
-      "PostgreSQL",
-      "SMTP",
-      "REST APIs",
-    ],
-    images: [
-      {
-        src: "/images/projects/email-automation-dashboard.png",
-        alt: "Email automation platform dashboard preview",
-        caption: "Campaign dashboard. TODO: replace with a real screenshot.",
-      },
-    ],
-    links: [
-      // TODO: add real links when available. Only render links that exist.
-    ],
-    featured: true,
-  },
   {
     slug: "elion",
     title: "Elion",
@@ -403,80 +306,416 @@ export const PROJECTS: readonly Project[] = [
     ],
   },
   {
-    slug: "ai-automation-systems",
-    title: "AI Automation Systems",
-    status: "Ongoing experiments",
-    tone: "info",
+    slug: "gadget-cartel",
+    title: "Gadget Cartel",
+    status: "In development · audited",
+    tone: "accent",
     summary:
-      "A collection of automation projects using modern AI tools: workflow automation, browser automation, coding agents, and productivity systems.",
+      "A storefront site for premium consumer tech: Next.js 16, large product catalogue, full a11y and mobile hardening.",
     overview:
-      "A growing collection of automation projects built on modern AI tools. It covers workflow automation, browser automation, coding agents, business automation, and productivity systems. The thread through all of them is continuous experimentation with AI-powered development workflows: learning what works, where the limits are, and how to make AI-assisted automation trustworthy.",
+      "Gadget Cartel is a storefront site for a curated consumer-tech retailer, built on Next.js 16 with App Router, TypeScript strict mode, and Tailwind CSS. The catalogue covers iPhones, iPads, MacBooks, consoles, accessories, and watches with detailed product pages. An audit pass tightened iOS input-zoom prevention, removed orphan image files, and documented Apple CDN asset gaps. The site runs locally for review; client-supplied shop address, email, and product verification are still pending.",
     problem:
-      "Repetitive knowledge work and manual processes are everywhere. The open question is how far AI-assisted automation can reliably take them.",
+      "Curated tech retail needs a real product catalogue with honest imagery: not procedurally rendered fakes, not placeholder duplicates. Mobile users on iOS Safari hit input-zoom on every form field because form font-size was 14px. Orphan image files crowded the legitimate ones in the data layer.",
     goals: [
-      "Explore what AI-assisted automation can reliably do.",
-      "Build reusable patterns for workflow and browser automation.",
-      "Understand where guardrails and verification are essential.",
+      "Ship a real catalogue with honest product imagery.",
+      "Harden mobile UX on iOS Safari: prevent input zoom, fix overflow at 375px.",
+      "Keep the codebase audit-ready: documented gaps, no fake metrics, no fake reviews.",
     ],
-    research:
-      "These experiments are research: each project tests a hypothesis about what AI-assisted automation can reliably do, then captures the pattern. The verification-first discipline carried over from the data pipeline work.",
-    role: "Designed and built the automation projects, capturing shared patterns along the way.",
+    role: "Designed and built the catalogue, page structure, and components; ran the audit pass that caught and fixed iOS input-zoom and orphan assets.",
     architecture: {
-      automation:
-        "Standalone automation projects, each with its own pipeline and integration surface.",
-      apis: "AI provider integrations and orchestration layers per project.",
+      frontend: "Next.js 16 App Router with TypeScript strict mode.",
+      styling:
+        "Tailwind CSS with explicit per-component design tokens, no inline magic numbers.",
+      data: "TypeScript product catalogue with honest per-product image refs.",
     },
     features: [
-      "Workflow automation",
-      "Browser automation",
-      "AI coding agents",
-      "Business automation",
-      "Productivity systems",
+      "Product catalogue with detailed pages (iPhone, iPad, MacBook, consoles, accessories, watches)",
+      "Shop explorer with category filters",
+      "Contact form and cart drawer",
+      "About, sponsorship, and event pages",
     ],
     challenges: [
       {
         challenge:
-          "Reliability: AI automation needs guardrails and verification to be trustworthy.",
+          "iOS Safari zoomed every input on focus because font-size was 14px.",
         solution:
-          "Adding explicit verification stages to every automation, mirroring the discipline used in data pipelines.",
+          "Replaced every `text-sm` (14px) on `<input>` / `<select>` / `<textarea>` with `text-base` (16px).",
       },
       {
         challenge:
-          "Keeping experiments honest about demo-ready vs. production-ready.",
+          "Orphan image files in `public/products/` were visually crowding the legitimate product cards.",
         solution:
-          "Labelling work clearly and only claiming production readiness where it's earned.",
+          "Swept orphans and removed unused downloads from prior curation cycles.",
+      },
+      {
+        challenge:
+          "Apple purged 2021 Pro / Pro Max color variants from its CDN, leaving only one Sierra placeholder per model.",
+        solution:
+          "Honest scope: kept the one surviving image, added a copy note that color availability is confirmed at order time, did not fabricate per-color renders.",
       },
     ],
     lessons: [
-      "AI-assisted workflows are powerful but need explicit verification stages.",
-      "The same discipline that keeps data pipelines honest keeps automation honest.",
-    ],
-    metrics: [
-      { value: "∞", label: "experiments" },
-      { value: "1", label: "rule: verify everything" },
+      "README claims about a11y are not the same as code implementing them. Always grep the actual classes on inputs when 'iOS no-zoom' is in the docs.",
+      "Orphan image files at the project root can look like duplicate product cards. Sweep orphans before debugging the data layer.",
+      "When a content source (Apple CDN) loses assets, the honest move is a single placeholder + copy disclaimer, not a procedurally-rendered fake.",
     ],
     future: [
-      "Package the strongest patterns into reusable automation templates.",
-      "Write up the guardrail findings as practical engineering guidance.",
+      "Client-supplied shop address and email (currently placeholder).",
+      "Client verification of demo product prices.",
+      "iPhone 13 Pro / Pro Max per-color images if Apple re-uploads to CDN.",
+    ],
+    technologies: [
+      "Next.js 16",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "App Router",
+      "Static rendering",
+    ],
+    images: [],
+    links: [
+      // TODO: add a real deployed URL when the client publishes.
+    ],
+    featured: true,
+  },
+  {
+    slug: "bic-website",
+    title: "Babcock Investors Club Website",
+    status: "Live · static site",
+    tone: "success",
+    summary:
+      "Static 8-page website for the Babcock Investors Club at Babcock University, Nigeria. Mobile-first responsive hardening.",
+    overview:
+      "A static 8-page site for the Babcock Investors Club (BIC) at Babcock University, Nigeria. Built with hand-written HTML, a single shared stylesheet, and a single shared JS file — no build step. The mobile-responsiveness pass tightened the worst overflow points at the 375px floor (hero stats gap, event meta wrap, intro stats box, sponsor logo track, card padding) and converted three hardcoded headings to `clamp()` so they no longer blow up below 480px. Also prevented iOS Safari input zoom by ensuring 16px font on all form fields below 480px.",
+    problem:
+      "The site already had reasonable responsive scaffolding at 1024px / 768px / 480px breakpoints, but below 480px (the iPhone SE floor) several elements overflowed and form fields triggered iOS auto-zoom. Hardcoded hero headings also blew up at narrow widths.",
+    goals: [
+      "Eliminate overflow at the 375px iPhone SE floor.",
+      "Prevent iOS Safari form-zoom on every input below 480px.",
+      "Make hero typography fluid without media-query hand-tuning.",
+    ],
+    role: "Implemented the mobile-responsiveness fix pass end to end: CSS tuning, fluid type, iOS zoom prevention.",
+    architecture: {
+      frontend:
+        "Plain HTML/CSS/JS. Eight pages share one stylesheet and one JS file.",
+      deployment: "Static, no build step. Open `index.html` in a browser.",
+    },
+    features: [
+      "Eight pages (Home, About, Events, Membership, Sponsorship, Blog, Contact, ...)",
+      "Responsive scaffolding at 1024px / 768px / 480px / ≤375px",
+      "iOS Safari input zoom prevention (16px on every form field ≤480px)",
+      "Fluid hero typography via `clamp()`",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Overflow at 375px on hero stats, event meta row, and intro stats box.",
+        solution:
+          "Tightened gaps and reflowed the intro stats box from absolute-positioned to inline flow.",
+      },
+      {
+        challenge: "Hardcoded hero headings blew up at narrow widths.",
+        solution:
+          "Replaced with `clamp()` so headings scale fluidly without media-query hand-tuning.",
+      },
+    ],
+    lessons: [
+      "Static sites still benefit from a deliberate mobile pass — the breakpoints in the spec aren't always enough.",
+      "Fluid type (`clamp()`) is cheaper than re-tuning media queries at every width.",
+    ],
+    future: [
+      "Add real photography when supplied by the club.",
+      "Wire an events CMS so non-developers can update events without editing HTML.",
+    ],
+    technologies: ["HTML", "CSS", "Vanilla JavaScript", "Static hosting"],
+    images: [],
+    links: [
+      // TODO: add the public BIC URL when published.
+    ],
+    featured: false,
+  },
+  {
+    slug: "rbac-multi-tenant",
+    title: "RBAC + Multi-Tenant Demo",
+    status: "Demo · source-only",
+    tone: "info",
+    summary:
+      "Multi-tenant RBAC + PostgreSQL Row Level Security demo: one org, four users, three independent authorization layers.",
+    overview:
+      "A Next.js 16 + Supabase + PostgreSQL demo that models a single organization (Elion) with four users across three departments (Finance, Customer Support, IT). Authorization is enforced at three independent layers: (1) PostgreSQL Row Level Security as the source of truth, (2) server-side checks in `src/lib/auth.ts` with a `requirePermission` helper, and (3) UI hiding purely as a cosmetic layer — server checks still apply if a URL is typed directly. Resource access flows: Org → Users → Role → Permissions.",
+    problem:
+      "Most RBAC demos treat authorization as a single check (UI gating or middleware). Real systems need layered defense: even if the UI is bypassed, the database refuses the row.",
+    goals: [
+      "Demonstrate three independent authorization layers.",
+      "Use PostgreSQL RLS as the source of truth, not a UX nicety.",
+      "Show that UI hiding is decorative: server-side checks still enforce the policy.",
+    ],
+    role: "Designed the data model, wrote the RLS policies, the server-side `requirePermission` helper, and the demo UI.",
+    architecture: {
+      frontend: "Next.js 16 App Router + TypeScript strict mode.",
+      backend: "Supabase Auth + Postgres with per-row RLS policies.",
+      database:
+        "PostgreSQL: `auth.users`, `user_profiles`, `roles`, `permissions`, resource tables per department.",
+      authentication: "Supabase Auth via `@supabase/ssr`.",
+      authorization:
+        "Three layers: PostgreSQL RLS (source of truth), server-side `requirePermission`, UI hiding.",
+    },
+    features: [
+      "Four pre-seeded users across Finance / Customer Support / IT",
+      "Per-row RLS policies on every protected resource table",
+      "Server-side `requirePermission` helper with Zod validation",
+      "UI gating as a cosmetic-only layer",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Making three layers agree on what 'authorized' means without drift.",
+        solution:
+          "Treating PostgreSQL RLS as the source of truth and deriving server / UI checks from the same permission map.",
+      },
+      {
+        challenge:
+          "Demoing RLS without a running Supabase instance is awkward.",
+        solution:
+          "Documenting the Supabase setup steps in the README so the demo can be reproduced with a free project.",
+      },
+    ],
+    lessons: [
+      "UI hiding is decorative. If your authorization story ends at the UI, you don't have one.",
+      "PostgreSQL RLS as a source of truth forces every other layer to agree with the database — that's a feature, not a tax.",
+    ],
+    future: [
+      "Add an offline-mode verification script for environments without Supabase.",
+      "Document the magic UUIDs so reviewers can follow the demo without setting up auth.",
+    ],
+    technologies: [
+      "Next.js 16",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "Row Level Security",
+      "Tailwind CSS",
+      "Zod",
+    ],
+    images: [],
+    links: [
+      // TODO: add a hosted demo URL when one exists.
+    ],
+    featured: false,
+  },
+  {
+    slug: "cold-email-automation",
+    title: "Cold Email Automation",
+    status: "Active · local",
+    tone: "success",
+    summary:
+      "n8n-based cold email pipeline running locally via Docker. Compliance on by default: List-Unsubscribe, RFC 8058 One-Click, suppression list.",
+    overview:
+      "A standalone n8n workflow for cold email that runs locally via Docker. CSV (or JSON array) of leads goes in; personalized, compliance-ready emails come out. The pipeline covers intake, optional enrichment (Apollo / Hunter), dedupe + suppression, LLM-personalized opening lines, SMTP send with List-Unsubscribe and RFC 8058 One-Click headers, and a physical-address footer for CAN-SPAM. Reply and bounce/complaint webhooks auto-suppress the lead. A dry-run mode lets you rehearse the whole flow without sending anything.",
+    problem:
+      "Cold email at scale fails for boring reasons: bad data, no suppression, no unsubscribe, no physical address, no audit trail. The pipeline was built so that compliance is the default and verification is baked in, not bolted on.",
+    goals: [
+      "Ship compliance on by default: List-Unsubscribe + RFC 8058 One-Click + physical address footer.",
+      "Catch bounces and complaints before they poison sender reputation.",
+      "Personalize at the opening line without inventing facts.",
+    ],
+    role: "Designed and built the workflow, the suppression list, the dry-run path, and the reply/bounce handlers.",
+    architecture: {
+      automation:
+        "n8n workflow (16 nodes): intake → enrich → suppress → personalize → dry-run → send → record.",
+      database: "SQLite suppression list at `data/suppression.db`.",
+      apis: "SMTP (with List-Unsubscribe + RFC 8058), LLM provider for personalization, optional Apollo / Hunter enrichment.",
+      deployment: "Docker Compose. n8n on http://localhost:5678.",
+    },
+    features: [
+      "Intake via webhook or CSV drop in `data/intake/`",
+      "Optional Apollo / Hunter enrichment",
+      "Dedupe + SQLite suppression check on every lead",
+      "LLM-personalized opening line",
+      "SMTP send with List-Unsubscribe, RFC 8058 One-Click, physical address footer",
+      "Reply webhook → auto-suppress",
+      "Bounce/complaint webhook → auto-suppress",
+      "Dry-run mode (rehearse without sending)",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Compliance is usually bolted on after the fact, which is how sender reputation dies.",
+        solution:
+          "Made List-Unsubscribe + RFC 8058 + the physical address footer non-optional: removing them requires editing the workflow, not toggling a setting.",
+      },
+      {
+        challenge: "Bounces and complaints can poison the pipeline silently.",
+        solution:
+          "Bounce / complaint webhook handler that flips the lead to suppressed on receipt, before the next send.",
+      },
+    ],
+    lessons: [
+      "Compliance headers belong on by default. A 'compliance mode' flag is a smell.",
+      "Reply and bounce handling are part of the product, not a follow-up ticket.",
+    ],
+    future: [
+      "Per-tenant suppression list when running for multiple clients.",
+      "Engagement signals (opens / replies) feeding the lead score.",
+    ],
+    technologies: [
+      "n8n",
+      "Docker Compose",
+      "SQLite",
+      "SMTP",
+      "Apollo / Hunter (optional)",
+      "LLM provider (personalization)",
+    ],
+    images: [],
+    links: [
+      // TODO: add a hosted demo URL when one exists.
+    ],
+    featured: false,
+  },
+  {
+    slug: "ai-automation-systems",
+    title: "AI Automation Systems",
+    status: "Future Elion product line",
+    tone: "info",
+    summary:
+      "Elion's longer-term product direction. Today: an agency that helps businesses bridge repetitive workflows. Tomorrow: AI automation products built on what those engagements teach.",
+    overview:
+      "AI Automation Systems is Elion's forward-looking product line. Right now Elion operates as an agency: working with businesses to identify, automate, and bridge the repetitive workflows that consume team hours. The agency work is the research lab. Every engagement surfaces a pattern, a failure mode, and a constraint that becomes input for the products Elion will ship later. This entry tracks that product direction: honest about scope, no live product yet, but a clear thesis.",
+    problem:
+      "Businesses carry operational friction in the gaps between tools. Repetitive workflows live in spreadsheets, inboxes, and tribal knowledge. Most agencies sell deliverables; the systems underneath a business keep leaking hours.",
+    goals: [
+      "Operate Elion as an agency that bridges repetitive workflows for growing businesses.",
+      "Capture patterns and constraints from each engagement to inform future product work.",
+      "Build toward AI automation products that earn production readiness through real customer use.",
+    ],
+    research:
+      "The research is the work. Each client engagement is a hypothesis: what workflow is repetitive, what is the right way to automate it, where do verification and guardrails belong. Patterns that repeat across engagements graduate into product candidates.",
+    role: "Founder. Responsible for the agency thesis, the client engagements that fund it, and the product direction that emerges from them.",
+    architecture: {
+      automation:
+        "Engagement-by-engagement automation pipelines, each scoped to a single client's workflow.",
+      apis: "Provider integrations (email, CRM, data, AI) composed per engagement.",
+      infrastructure:
+        "Modular tooling stack so automation work compounds across engagements without rework.",
+    },
+    features: [
+      "Repetitive workflow identification",
+      "Workflow automation delivery",
+      "Client-facing operational tooling",
+      "Pattern library from real engagements",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Keeping 'agency today' and 'product tomorrow' honest and distinct.",
+        solution:
+          "Treating every entry in this project as a hypothesis until it earns a real customer or a working product.",
+      },
+      {
+        challenge:
+          "Avoiding premature product commitments that oversell agency work.",
+        solution:
+          "Labelling this entry explicitly as a future product line, not a current product.",
+      },
+    ],
+    lessons: [
+      "Agency work is research when you treat it that way. The constraints it surfaces are the inputs a real product needs.",
+      "Scope honesty builds trust: labelling a future line as a future line is more credible than dressing it up as a current product.",
+    ],
+    future: [
+      "Run the agency engagements that fund and inform product direction.",
+      "Graduate the strongest patterns into a reusable automation product.",
+      "Ship the first AI automation product once it has earned production readiness.",
     ],
     technologies: [
       "AI integrations",
       "Automation pipelines",
-      "Browser automation",
-      "Coding agents",
+      "Workflow design",
       "Node.js",
       "Python",
+      "CRM and email provider APIs",
+    ],
+    images: [],
+    links: [],
+  },
+  {
+    slug: "ideas-and-adherents",
+    title: "Ideas & Adherents",
+    status: "Live · client site",
+    tone: "success",
+    summary:
+      "Brand and website for a Lagos-based impact agency: positioning, identity system, and a live marketing site.",
+    overview:
+      "A brand and website engagement for Ideas & Adherents, a Lagos-based impact agency positioned as 'The Impact Agency.' The work covered the agency's positioning around its TR Model (Thought and Relationships), a refreshed visual identity, and a live marketing site that explains their services and how they engage with clients. The site is live and serving traffic today.",
+    problem:
+      "An impact agency does serious work but its digital presence didn't carry the weight of the practice. The brand needed positioning, a coherent identity system, and a website that could explain a non-trivial service offering without losing the reader.",
+    goals: [
+      "Position the agency clearly: 'The Impact Agency' with the TR Model as the through-line.",
+      "Translate the four service lines into a clean, readable marketing site.",
+      "Ship a live site the agency can actually point clients to.",
+    ],
+    role: "Led brand direction, identity, and the website build end to end.",
+    architecture: {
+      frontend:
+        "Marketing site built around a clear information architecture for the four service lines.",
+      deployment:
+        "Live public site with proper metadata, social cards, and SEO basics.",
+    },
+    features: [
+      "Positioning around 'The Impact Agency' and the TR Model (Thought & Relationships)",
+      "Refreshed visual identity",
+      "Live marketing site at ideasandadherents.com",
+      "Four service lines: Strategy Consultation, Design & Execution, Capacity Building, Program Management Retainer",
+      "Contact path for inbound client conversations",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Explaining a non-trivial agency offering (TR Model + four service lines) without losing clarity.",
+        solution:
+          "Tying the entire site to the TR Model so every section reads as a chapter of the same story rather than a list of disconnected services.",
+      },
+      {
+        challenge:
+          "Shipping a real, live site that an agency can hand to prospects.",
+        solution:
+          "Treated deployment as part of the scope: the work isn't done until the live URL works.",
+      },
+    ],
+    lessons: [
+      "Positioning first, then identity, then the site — in that order, or you redesign twice.",
+      "A live URL is the difference between a deliverable and a finished engagement.",
+    ],
+    metrics: [
+      { value: "4", label: "service lines shipped" },
+      { value: "1", label: "live site" },
+    ],
+    future: [
+      "Iterate on the site based on real client inquiries and the questions they ask first.",
+    ],
+    technologies: [
+      "Web design",
+      "Brand identity",
+      "Marketing site",
+      "Information architecture",
+      "SEO basics",
     ],
     images: [
       {
-        src: "/images/projects/ai-automation.png",
-        alt: "AI automation systems preview",
-        caption: "AI automation experiments. TODO: replace with real visuals.",
+        src: "/images/projects/ideas-and-adherents.png",
+        alt: "Ideas & Adherents marketing site",
+        caption:
+          "Ideas & Adherents. TODO: replace with a real screenshot from the live site.",
       },
     ],
     links: [
-      // TODO: add real links when available.
+      {
+        kind: "demo",
+        label: "View live site",
+        href: "https://ideasandadherents.com",
+      },
     ],
+    featured: true,
   },
   {
     slug: "personal-portfolio",

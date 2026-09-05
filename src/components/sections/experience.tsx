@@ -21,50 +21,46 @@ interface TimelineItem {
 
 const TIMELINE: readonly TimelineItem[] = [
   {
-    period: "Present",
+    period: "2026 — Now",
     title: "Founder",
     org: "Elion",
     description:
-      "Building a technology company focused on AI automation, intelligent business systems, workflow optimization, and modern web products. Currently establishing brand, positioning, and technical infrastructure.",
-    tags: ["AI automation", "Business systems"],
+      "Building a technology company around AI automation, intelligent business systems, workflow optimization, and modern web products. Brand, positioning, and initial infrastructure in active development.",
+    tags: ["AI automation", "Business systems", "Startup"],
     href: "/projects/elion",
     current: true,
   },
   {
-    period: "Recent",
-    title: "Email Automation Platform",
-    org: "Personal project",
+    period: "2024 — Now",
+    title: "B.Sc. Software Engineering",
+    org: "Babcock University",
     description:
-      "End-to-end outbound email automation: lead discovery, qualification, company verification, contact enrichment, campaign dashboard, email scheduling, SMTP management, and analytics, built through weeks of iteration.",
-    tags: ["Next.js", "Node.js", "PostgreSQL"],
-    href: "/projects/email-automation-platform",
+      "Studying software engineering with a minor in data science. Coursework covers data structures, algorithms, systems design, and the engineering fundamentals behind the systems I build outside the classroom.",
+    tags: ["Software engineering", "Data science"],
   },
   {
-    period: "Recent",
-    title: "Lead Generation & Intelligence Platform",
-    org: "Personal project",
+    period: "2024",
+    title: "Conrad Challenge National Finalist",
+    org: "Innovation competition",
     description:
-      "Automated B2B prospecting system that discovers businesses, enriches company data, verifies organizations, finds contacts, scores lead quality, and prepares outreach campaigns with multi-stage verification.",
-    tags: ["Automation", "Data pipelines"],
-    href: "/projects/lead-generation-platform",
+      "Selected as a National Finalist in the 2024 Conrad Challenge after developing and pitching a research-backed venture to judges. The experience sharpened how I take a problem from idea to defendable proposal.",
+    tags: ["Innovation", "Entrepreneurship"],
   },
   {
-    period: "Recent",
-    title: "Ingenuity HR Platform",
-    org: "Redesign & modernization",
+    period: "2023",
+    title: "Ayoola's Guide to Leveling Up",
+    org: "Book & companion course",
     description:
-      "Complete redesign of an HR consulting company's website: branding, UX, responsiveness, information architecture, and technical foundation, including backend and database planning. Paused while commercial discussions are finalized.",
-    tags: ["Next.js", "UX", "Architecture"],
-    href: "/projects/ingenuity-hr-platform",
+      "Authored a book and companion course on personal growth, discipline, faith, productivity, and self-improvement. Writing it forced a clarity I now carry into product design and systems thinking.",
+    tags: ["Writing", "Teaching"],
   },
   {
-    period: "Ongoing",
-    title: "AI Automation Systems",
-    org: "Experiments",
+    period: "2023",
+    title: "Best Sportsman Award",
+    org: "Basketball",
     description:
-      "A collection of automation projects using modern AI tools: workflow automation, browser automation, coding agents, business automation, and productivity systems.",
-    tags: ["AI agents", "Automation"],
-    href: "/projects/ai-automation-systems",
+      "Awarded Best Sportsman for teamwork, leadership, consistency, and discipline across the season. The habits that win games are the same ones that ship software: preparation, discipline, performing under pressure.",
+    tags: ["Leadership", "Discipline"],
   },
 ];
 

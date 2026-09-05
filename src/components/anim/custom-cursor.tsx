@@ -4,40 +4,43 @@ import * as React from "react";
 
 /**
  * CustomCursor: a quiet, premium two-part cursor (dot + trailing ring) plus
- * magnetic pull on `[data-magnetic]` elements.
+ * magnetic pull on `[data-magnetic]` elements, text mode, image mode.
  *
  * Cohesion rules (why this feels unified):
  * - ONE rAF loop drives BOTH the dot and the ring on the same tick.
- * - The ring's lerp (0.65) is tuned for near-locked tracking: it trails by a
- *   fraction of a frame for depth but never feels slow or floaty.
- * - Scale (interactive grow / text mode) is lerped INSIDE the loop, and the
- *   ring has NO CSS transform transition, so nothing fights the loop.
- * - On first visible frame the ring snaps to the dot's position, so they
- *   never start desynchronized.
+ * - The ring's lerp (0.7) is tuned for near-locked tracking with subtle trail.
+ * - Scale (interactive grow / text mode / image mode) is lerped INSIDE the loop.
+ * - On first visible frame the ring snaps to the dot's position.
  *
  * Rules:
  * - Only activates on fine pointers + no reduced motion (desktop feel).
  * - No re-renders on move: everything is driven through refs and one rAF loop.
  * - The native cursor is hidden by adding `cursor-premium` to <html>.
- * - Hovering any interactive element grows the ring; `[data-cursor-text]`
- *   elements switch the ring into a label state ("View").
- * - Magnetic targets translate up to ~6px toward the pointer on mousemove
+ * - Hovering interactive elements grows the ring.
+ * - `[data-cursor-text]` elements switch to text mode (I-beam cursor).
+ * - `[data-cursor-image]` elements switch to image mode (zoom cursor).
+ * - Magnetic targets translate up to ~8px toward the pointer on mousemove
  *   and spring back on leave.
  */
 export const CustomCursor: React.FC = () => {
   const dotRef = React.useRef<HTMLDivElement>(null);
   const ringRef = React.useRef<HTMLDivElement>(null);
   const labelRef = React.useRef<HTMLSpanElement>(null);
+  const imageIconRef = React.useRef<HTMLSpanElement>(null);
 
   const target = React.useRef({ x: -100, y: -100 });
   const ringPos = React.useRef({ x: -100, y: -100 });
   const currentScale = React.useRef(1);
+  const currentRotation = React.useRef(0);
   const magneticEl = React.useRef<HTMLElement | null>(null);
   const state = React.useRef({
     hovering: false,
     textMode: false,
+    imageMode: false,
     visible: false,
     targetScale: 1,
+    targetRotation: 0,
+    labelText: "View",
   });
 
   React.useEffect(() => {
@@ -55,7 +58,8 @@ export const CustomCursor: React.FC = () => {
     const dot = dotRef.current;
     const ring = ringRef.current;
     const label = labelRef.current;
-    if (!dot || !ring || !label) return;
+    const imageIcon = imageIconRef.current;
+    if (!dot || !ring || !label || !imageIcon) return;
 
     let raf = 0;
 
@@ -66,19 +70,24 @@ export const CustomCursor: React.FC = () => {
         return;
       }
 
-      // Ring catches up to the dot every frame. 0.65 is effectively locked:
-      // ~1 frame of trail for depth, imperceptible as latency.
-      ringPos.current.x += (target.current.x - ringPos.current.x) * 0.65;
-      ringPos.current.y += (target.current.y - ringPos.current.y) * 0.65;
+      // Ring catches up to the dot every frame. 0.7 for smooth trail.
+      ringPos.current.x += (target.current.x - ringPos.current.x) * 0.7;
+      ringPos.current.y += (target.current.y - ringPos.current.y) * 0.7;
 
-      // Scale eases toward its target (grow over links, larger over text).
+      // Scale eases toward its target.
       currentScale.current +=
-        (current.targetScale - currentScale.current) * 0.38;
+        (current.targetScale - currentScale.current) * 0.4;
+
+      // Rotation for image mode.
+      currentRotation.current +=
+        (current.targetRotation - currentRotation.current) * 0.3;
 
       dot.style.transform = `translate3d(${target.current.x}px, ${target.current.y}px, 0) translate(-50%, -50%)`;
-      ring.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%) scale(${currentScale.current})`;
+      ring.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%) scale(${currentScale.current}) rotate(${currentRotation.current}deg)`;
 
       label.style.opacity = current.textMode ? "1" : "0";
+      imageIcon.style.opacity = current.imageMode ? "1" : "0";
+      label.textContent = current.labelText;
 
       raf = window.requestAnimationFrame(tick);
     };
@@ -110,48 +119,80 @@ export const CustomCursor: React.FC = () => {
       if (element) {
         if (magneticEl.current && magneticEl.current !== element) {
           magneticEl.current.style.transform = "";
+          magneticEl.current.style.transition = "transform 0.4s cubic-bezier(0.3, 0, 0, 1)";
         }
         magneticEl.current = element;
         const rect = element.getBoundingClientRect();
         const relX = (event.clientX - rect.left) / rect.width - 0.5;
         const relY = (event.clientY - rect.top) / rect.height - 0.5;
-        element.style.transform = `translate(${relX * 12}px, ${relY * 10}px)`;
+        element.style.transform = `translate(${relX * 16}px, ${relY * 12}px)`;
       } else if (magneticEl.current) {
         magneticEl.current.style.transform = "";
+        magneticEl.current.style.transition = "transform 0.5s cubic-bezier(0.3, 0, 0, 1)";
         magneticEl.current = null;
       }
     };
 
     const onOver = (event: MouseEvent) => {
+      const targetEl = event.target as HTMLElement | null;
+
       // Text-entry fields keep the native I-beam: hide the custom cursor.
-      if (
-        (event.target as HTMLElement | null)?.closest?.(
-          "input, textarea, select",
-        )
-      ) {
+      if (targetEl?.closest?.("input, textarea, select, [contenteditable]")) {
         state.current.hovering = false;
         state.current.textMode = false;
+        state.current.imageMode = false;
         state.current.targetScale = 1;
+        state.current.targetRotation = 0;
+        state.current.labelText = "View";
         setVisible(false);
         return;
       }
 
-      const element = (event.target as HTMLElement | null)?.closest?.(
-        "a, button, [role='button'], [data-cursor-text], label",
+      // Check for image mode first (images, figures, galleries)
+      const imageEl = targetEl?.closest?.(
+        "img, figure, [data-cursor-image], .gallery-image, .project-image",
       );
-      const interactive = Boolean(element);
-      const textMode = Boolean(
-        (event.target as HTMLElement | null)?.closest?.("[data-cursor-text]"),
-      );
-      state.current.hovering = interactive;
-      state.current.textMode = textMode;
-      state.current.targetScale = textMode ? 2.2 : interactive ? 1.7 : 1;
+      const isImage = Boolean(imageEl);
 
-      ring.classList.toggle("bg-accent-soft", interactive);
-      ring.classList.toggle("border-accent", interactive && !textMode);
-      ring.classList.toggle("border-accent-border", !interactive);
-      dot.style.opacity = interactive ? "0.25" : "1";
-      label.textContent = element?.getAttribute("data-cursor-text") ?? "View";
+      // Check for text mode
+      const textEl = targetEl?.closest?.(
+        "a, button, [role='button'], [data-cursor-text], label, h1, h2, h3, h4, h5, h6, p, span, li, td, th",
+      );
+      const isText = Boolean(textEl) && !isImage;
+
+      // Check for interactive elements
+      const interactiveEl = targetEl?.closest?.(
+        "a, button, [role='button'], [data-magnetic], label, input[type='checkbox'], input[type='radio'], select",
+      );
+      const isInteractive = Boolean(interactiveEl);
+
+      state.current.hovering = isInteractive || isText || isImage;
+      state.current.textMode = isText;
+      state.current.imageMode = isImage;
+
+      if (isImage) {
+        state.current.targetScale = 3.5;
+        state.current.targetRotation = 15;
+        state.current.labelText = "Zoom";
+      } else if (isText) {
+        state.current.targetScale = 2.2;
+        state.current.targetRotation = 0;
+        state.current.labelText = textEl?.getAttribute("data-cursor-text") ?? "Select";
+      } else if (isInteractive) {
+        state.current.targetScale = 1.8;
+        state.current.targetRotation = 0;
+        state.current.labelText = interactiveEl?.getAttribute("data-cursor-text") ?? "Click";
+      } else {
+        state.current.targetScale = 1;
+        state.current.targetRotation = 0;
+        state.current.labelText = "View";
+      }
+
+      ring.classList.toggle("bg-accent-soft", state.current.hovering);
+      ring.classList.toggle("border-accent", state.current.hovering && !isText && !isImage);
+      ring.classList.toggle("border-accent-border", !state.current.hovering);
+      ring.classList.toggle("border-accent-secondary", isImage);
+      dot.style.opacity = state.current.hovering ? "0.15" : "1";
     };
 
     const onLeave = () => setVisible(false);
@@ -177,8 +218,6 @@ export const CustomCursor: React.FC = () => {
 
   return (
     <div
-      /* Always mounted: visibility is driven by the capability gate above, so
-         the pair can never silently vanish while the native cursor is hidden. */
       aria-hidden
       className="pointer-events-none fixed inset-0 z-[80]"
     >
@@ -189,14 +228,24 @@ export const CustomCursor: React.FC = () => {
       />
       <div
         ref={ringRef}
-        className="fixed left-0 top-0 flex size-9 items-center justify-center rounded-full border border-accent-border bg-transparent opacity-0 transition-[border-color,background-color,opacity] duration-fast ease-standard"
-        style={{ willChange: "transform" }}
+        className="fixed left-0 top-0 flex size-10 items-center justify-center rounded-full border border-accent-border bg-transparent opacity-0 transition-[border-color,background-color,opacity] duration-fast ease-standard"
+        style={{ willChange: "transform, opacity" }}
       >
         <span
           ref={labelRef}
-          className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent opacity-0"
+          className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent opacity-0 transition-opacity duration-fast"
         >
           View
+        </span>
+        <span
+          ref={imageIconRef}
+          className="absolute size-4 text-accent opacity-0 transition-opacity duration-fast"
+          aria-hidden
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-full h-full">
+            <circle cx="11" cy="11" r="8" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg>
         </span>
       </div>
     </div>

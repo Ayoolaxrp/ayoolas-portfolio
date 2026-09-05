@@ -180,24 +180,23 @@ export const Hero: React.FC = () => {
               id="hero-heading"
               className="text-display-xl text-text-primary"
             >
-              <TextReveal text="I build the systems that" className="mb-1" />
+              <TextReveal text="I build AI-powered systems" className="mb-1" />
               <span className="text-serif-display-italic block">
                 <TextReveal
-                  text="turn difficult problems"
+                  text="that turn manual business processes"
                   wordClassName="text-gradient"
                 />
               </span>
-              <TextReveal text="into working software." />
+              <TextReveal text="into scalable workflows." />
             </h1>
 
             <p
               data-hero-item
               className="mt-8 max-w-xl text-body-lg text-text-secondary reading-width"
             >
-              I&apos;m a full-stack engineer and AI automation builder. I design
-              intelligent business systems, automate workflows, and build the
-              technology companies run on, including Elion, the startup I&apos;m
-              founding.
+              Founder building AI automation, intelligent business systems, and
+              modern web products. I design and ship the technology companies
+              run on, including Elion, the company I&apos;m building.
             </p>
 
             <div
@@ -234,9 +233,9 @@ export const Hero: React.FC = () => {
             aria-hidden
             className="absolute right-0 top-1/2 hidden -translate-y-1/2 flex-col gap-2 border-l border-border-subtle pl-6 font-mono text-caption leading-loose text-text-tertiary lg:flex"
           >
-            <span>Next.js · React · TypeScript</span>
+            <span>AI automation · Agents</span>
+            <span>Next.js · TypeScript</span>
             <span>Node.js · PostgreSQL</span>
-            <span>AI · Automation · Systems</span>
           </div>
 
           {/* Scroll indicator */}

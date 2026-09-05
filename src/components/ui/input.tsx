@@ -45,12 +45,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         "w-full rounded-md border bg-surface text-text-primary",
         "placeholder:text-text-tertiary",
         "transition-[border-color,box-shadow] duration-fast ease-standard",
-        "focus:outline-none",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
         "disabled:cursor-not-allowed disabled:bg-surface-sunken disabled:text-text-disabled",
+        "touch-target",
         sizeClasses[inputSize],
         hasError
-          ? "border-error focus:border-error focus:ring-2 focus:ring-error focus:ring-offset-2 focus:ring-offset-canvas"
-          : "border-border-default hover:border-border-strong focus:border-border-accent focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-canvas",
+          ? "border-error focus:border-error"
+          : "border-border-default hover:border-border-strong focus:border-border-accent",
         className,
       )}
       {...props}
@@ -81,11 +82,12 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         "w-full min-h-[120px] rounded-md border bg-surface px-3 py-2 text-body-md text-text-primary",
         "resize-y placeholder:text-text-tertiary",
         "transition-[border-color,box-shadow] duration-fast ease-standard",
-        "focus:outline-none",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
         "disabled:cursor-not-allowed disabled:bg-surface-sunken disabled:text-text-disabled",
+        "touch-target",
         hasError
-          ? "border-error focus:border-error focus:ring-2 focus:ring-error focus:ring-offset-2 focus:ring-offset-canvas"
-          : "border-border-default hover:border-border-strong focus:border-border-accent focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-canvas",
+          ? "border-error focus:border-error"
+          : "border-border-default hover:border-border-strong focus:border-border-accent",
         className,
       )}
       {...props}

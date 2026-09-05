@@ -42,11 +42,19 @@ export const TIMELINE: readonly TimelineItem[] = [
     current: true,
   },
   {
+    period: "2024 — Now",
+    title: "B.Sc. Software Engineering",
+    organization: "Babcock University",
+    description:
+      "Studying software engineering with a minor in data science. The degree covers the engineering fundamentals behind real systems: data, algorithms, and software design.",
+    tags: ["Software engineering", "Data science"],
+  },
+  {
     period: "2024",
     title: "Conrad Challenge National Finalist",
     organization: "Recognition",
     description:
-      "Selected as a National Finalist in the 2024 Conrad Challenge after developing and presenting an innovative solution addressing real-world problems through entrepreneurship, technology, and creative thinking. The experience strengthened my problem-solving, presentation, collaboration, and innovation skills.",
+      "Selected as a National Finalist in the 2024 Conrad Challenge after developing and pitching a research-backed venture to judges. The experience sharpened how I take a problem from idea to defendable proposal.",
     tags: ["Innovation", "Entrepreneurship"],
     brand: {
       name: "Conrad Challenge",
@@ -55,60 +63,25 @@ export const TIMELINE: readonly TimelineItem[] = [
     },
   },
   {
-    period: "2024",
-    title: "Microsoft Excel Certification",
-    organization: "Microsoft Office Specialist",
+    period: "2023",
+    title: "Ayoola's Guide to Leveling Up",
+    organization: "Book & companion course",
     description:
-      "Earned Microsoft Excel certification, covering data organization, analysis, and spreadsheet skills at a professional level.",
-    tags: ["Data", "Analysis"],
-  },
-  {
-    period: "2024",
-    title: "Tuckshop",
-    organization: "Project",
-    description:
-      "A communication-focused project built to level up public speaking and presentation skills.",
-    tags: ["Communication", "Presentation"],
+      "Authored a book and companion course on personal growth, discipline, faith, productivity, and self-improvement. Writing it forced a clarity I now carry into product design and systems thinking.",
+    tags: ["Writing", "Teaching"],
   },
   {
     period: "2023",
     title: "Best Sportsman Award",
     organization: "Basketball",
     description:
-      "Earned the Best Sportsman Award, recognizing teamwork, leadership, consistency, discipline, and commitment both on and off the court.",
-    tags: ["Leadership", "Teamwork"],
-  },
-  {
-    period: "2023",
-    title: "Basketball MVP Nomination",
-    organization: "Basketball",
-    description:
-      "After a season of dedication, discipline, and consistent performance across competitions, I earned an MVP nomination and established myself as one of the strongest contributors on the team.",
-    tags: ["Sport", "Discipline"],
-  },
-  {
-    period: "2023",
-    title: "Microsoft PowerPoint Certification",
-    organization: "Microsoft Office Specialist",
-    description:
-      "Earned Microsoft PowerPoint certification, covering presentation design, communication, and visual storytelling.",
-    tags: ["Presentation", "Communication"],
-  },
-  {
-    period: "2023",
-    title: "Ayoola's Guide to Leveling Up",
-    organization: "Book & companion course",
-    description:
-      "A book and companion course documenting my journey of personal growth, discipline, faith, productivity, and self-improvement. It combines lessons from my own experiences with practical frameworks designed to help young people develop stronger habits, greater confidence, and a clearer direction for life.",
-    tags: ["Teaching", "Personal development"],
-  },
-  {
-    period: "2022",
-    title: "Microsoft Word Certification",
-    organization: "Microsoft Office Specialist",
-    description:
-      "Earned Microsoft Word certification, marking the beginning of building practical productivity and documentation skills.",
-    tags: ["Productivity", "Documentation"],
+      "Awarded Best Sportsman for teamwork, leadership, consistency, and discipline across the season. The habits that win games are the same ones that ship software: preparation, discipline, performing under pressure.",
+    tags: ["Leadership", "Discipline"],
+    brand: {
+      name: "Basketball",
+      src: "/images/logos/basketball.svg",
+      alt: "Basketball icon",
+    },
   },
 ];
 
@@ -146,7 +119,7 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
     summary:
       "National finalist in the 2024 Conrad Challenge, a global innovation and entrepreneurship competition.",
     story:
-      "Selected as a National Finalist in the 2024 Conrad Challenge after developing and presenting an innovative solution addressing real-world problems through entrepreneurship, technology, and creative thinking. Reaching the finals meant developing an idea from concept to a credible, research-backed proposal and defending it to judges.",
+      "Selected as a National Finalist in the 2024 Conrad Challenge after developing and pitching a research-backed venture addressing real-world problems through entrepreneurship, technology, and creative thinking. Reaching the finals meant developing an idea from concept to a credible, defended proposal.",
     lesson:
       "A good idea is the start, not the finish. The discipline of researching, building, and defending an idea is where the growth happens.",
     brand: {
@@ -155,7 +128,6 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
       alt: "Conrad Challenge official logo",
     },
     meta: {
-      // TODO: add the actual verification link and credential.
       date: "2024",
       verification: undefined,
       credentialUrl: undefined,
@@ -164,11 +136,11 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
   {
     id: "basketball",
     category: "sport",
-    title: "Basketball: MVP nominations and Best Sportsman",
+    title: "Best Sportsman Award",
     summary:
-      "MVP nominations, finals appearances, and the Best Sportsman Award.",
+      "Best Sportsman Award for teamwork, leadership, consistency, and discipline.",
     story:
-      "Basketball taught me teamwork, pressure, and consistency. After a season of dedication, discipline, and consistent performance across competitions, I earned an MVP nomination. I was also awarded Best Sportsman: recognition not just for performance, but for teamwork, leadership, consistency, and commitment both on and off the court.",
+      "Awarded Best Sportsman after a season of dedication and consistent performance across competitions. The award recognized not just on-court results, but teamwork, leadership, consistency, and commitment both on and off the court.",
     lesson:
       "The habits that win games are the same ones that ship software: preparation, discipline, and performing when it matters.",
     brand: {
@@ -177,66 +149,7 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
       alt: "Basketball icon",
     },
     meta: {
-      // TODO: add photos and dates.
       date: "2023",
-      image: undefined,
-    },
-  },
-  {
-    id: "microsoft-word",
-    category: "certification",
-    title: "Microsoft Word Certification",
-    summary: "Microsoft Office Specialist certification, 2022.",
-    story:
-      "Earned Microsoft Word certification in 2022. It marked the beginning of building practical productivity and documentation skills: formatting documents professionally, structuring information clearly, and creating materials that read well.",
-    brand: {
-      name: "Microsoft Office Specialist",
-      src: "/images/logos/microsoft-word.svg",
-      alt: "Microsoft Word logo",
-    },
-    meta: {
-      // TODO: add date, verification URL, credential link, certificate image.
-      date: "2022",
-      verification: undefined,
-      credentialUrl: undefined,
-      image: undefined,
-    },
-  },
-  {
-    id: "microsoft-powerpoint",
-    category: "certification",
-    title: "Microsoft PowerPoint Certification",
-    summary: "Microsoft Office Specialist certification, 2023.",
-    story:
-      "Earned Microsoft PowerPoint certification in 2023, covering presentation design, communication, and visual storytelling: building decks that communicate ideas clearly and hold an audience's attention.",
-    brand: {
-      name: "Microsoft Office Specialist",
-      src: "/images/logos/microsoft-powerpoint.svg",
-      alt: "Microsoft PowerPoint logo",
-    },
-    meta: {
-      date: "2023",
-      verification: undefined,
-      credentialUrl: undefined,
-      image: undefined,
-    },
-  },
-  {
-    id: "microsoft-excel",
-    category: "certification",
-    title: "Microsoft Excel Certification",
-    summary: "Microsoft Office Specialist certification, 2024.",
-    story:
-      "Earned Microsoft Excel certification in 2024, covering data organization, analysis, and spreadsheet skills: cleaning data, building formulas, and turning raw numbers into insight.",
-    brand: {
-      name: "Microsoft Office Specialist",
-      src: "/images/logos/microsoft-excel.svg",
-      alt: "Microsoft Excel logo",
-    },
-    meta: {
-      date: "2024",
-      verification: undefined,
-      credentialUrl: undefined,
       image: undefined,
     },
   },
@@ -259,6 +172,26 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
       // TODO: add course link and cover image.
     },
   },
+  {
+    id: "microsoft-office",
+    category: "certification",
+    title: "Microsoft Office Specialist (Word, PowerPoint, Excel)",
+    summary:
+      "Microsoft Office Specialist certifications across Word (2022), PowerPoint (2023), and Excel (2024).",
+    story:
+      "Earned Microsoft Office Specialist certifications in Word (2022), PowerPoint (2023), and Excel (2024). The path marked the start of building practical productivity and data-handling skills: formatting documents professionally, designing decks that hold attention, and turning raw numbers into insight.",
+    brand: {
+      name: "Microsoft Office Specialist",
+      src: "/images/logos/microsoft-excel.svg",
+      alt: "Microsoft Office Specialist logo",
+    },
+    meta: {
+      date: "2024",
+      verification: undefined,
+      credentialUrl: undefined,
+      image: undefined,
+    },
+  },
 ];
 
 export interface QualificationGroup {
@@ -270,17 +203,21 @@ export const QUALIFICATIONS: readonly QualificationGroup[] = [
   {
     title: "Education",
     items: [
-      "B.Sc. Software Engineering, Babcock University",
+      "B.Sc. Software Engineering, Babcock University (in progress, 2024 — present)",
       "Minor in Data Science",
     ],
   },
   {
     title: "Certifications",
     items: [
-      "Microsoft Word Certification",
-      "Microsoft PowerPoint Certification",
-      "Microsoft Excel Certification",
+      "Microsoft Office Specialist — Word",
+      "Microsoft Office Specialist — PowerPoint",
+      "Microsoft Office Specialist — Excel",
     ],
+  },
+  {
+    title: "Founder",
+    items: ["Founder, Elion", "Conrad Challenge National Finalist (2024)"],
   },
   {
     title: "Technical skills",
@@ -294,29 +231,12 @@ export const QUALIFICATIONS: readonly QualificationGroup[] = [
     ],
   },
   {
-    title: "Leadership",
-    items: ["Founder, Elion", "Team roles across school and sport"],
-  },
-  {
     title: "Awards",
     items: ["Conrad Challenge National Finalist", "Best Sportsman Award"],
   },
   {
-    title: "Public speaking",
-    items: ["Competition presentations", "Course creation and teaching"],
-  },
-  {
-    title: "Projects",
-    items: [
-      "Email Automation Platform",
-      "Lead Generation & Intelligence Platform",
-      "Ingenuity HR Platform",
-      "Personal Portfolio",
-    ],
-  },
-  {
-    title: "Entrepreneurship",
-    items: ["Founder of Elion", "Conrad Challenge venture"],
+    title: "Teaching",
+    items: ["Author, Ayoola's Guide to Leveling Up"],
   },
 ];
 
@@ -486,25 +406,6 @@ export const INTERESTS: readonly Interest[] = [
   { label: "Web Development", icon: "globe" },
   { label: "Entrepreneurship", icon: "rocket" },
   { label: "Business Systems", icon: "building2" },
-  { label: "Crypto & Financial Markets", icon: "lineChart" },
-  { label: "Algorithmic Trading", icon: "candlestickChart" },
   { label: "UI/UX Design", icon: "palette" },
-  { label: "Cybersecurity", icon: "shield" },
   { label: "Data Science", icon: "database" },
-  { label: "Cloud Computing", icon: "cloud" },
-  { label: "Open Source", icon: "folderGit2" },
-  { label: "Chess", icon: "chessKnight" },
-  { label: "Basketball", icon: "trophy" },
-  { label: "Leadership", icon: "crown" },
-  { label: "Writing", icon: "penLine" },
-  { label: "Reading", icon: "bookOpen" },
-  { label: "Personal Growth", icon: "sprout" },
-  { label: "Productivity", icon: "timer" },
-  { label: "Christian Faith", icon: "church" },
-  { label: "Teaching", icon: "presentation" },
-  { label: "Public Speaking", icon: "mic" },
-  { label: "Technology Innovation", icon: "lightbulb" },
-  { label: "Digital Products", icon: "shoppingBag" },
-  { label: "Problem Solving", icon: "puzzle" },
-  { label: "Creative Thinking", icon: "penTool" },
 ];

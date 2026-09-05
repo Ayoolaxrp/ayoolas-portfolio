@@ -2,10 +2,12 @@
  * Elion: Design Tokens (CSS variables)
  * Source of truth: TOKENS.md in /elion-website/docs.
  * Every value used in components lives here. No hardcoded values in components.
- * Dark-mode only in V1 (D-004).
+ * Supports both light and dark modes with theme persistence.
  * ============================================================================ */
 
-:root {
+/* Dark mode (default) */
+:root,
+[data-theme="dark"] {
   /* --------------------------------------------------------------------------
    * Surface hierarchy (TOKENS §1.1)
    * V5: deepened near-black canvas for a more cinematic, documentary feel.
@@ -80,6 +82,104 @@
   --icon-disabled: #475467;
 
   /* --------------------------------------------------------------------------
+   * Shadows (TOKENS §5): dark-mode calibrated
+   * ------------------------------------------------------------------------ */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.32);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.48);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.56);
+  --shadow-glow:
+    0 0 0 1px rgba(16, 185, 129, 0.32), 0 8px 24px rgba(16, 185, 129, 0.16);
+}
+
+/* Light mode */
+[data-theme="light"] {
+  /* --------------------------------------------------------------------------
+   * Surface hierarchy (Light)
+   * ------------------------------------------------------------------------ */
+  --bg-canvas: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-raised: #f1f5f9;
+  --bg-surface-sunken: #e2e8f0;
+  --bg-overlay: rgba(248, 250, 252, 0.8);
+  --bg-subtle: #f1f5f9;
+
+  /* --------------------------------------------------------------------------
+   * Borders (Light)
+   * ------------------------------------------------------------------------ */
+  --border-subtle: rgba(15, 23, 42, 0.06);
+  --border-default: rgba(15, 23, 42, 0.12);
+  --border-strong: rgba(15, 23, 42, 0.2);
+  --border-accent: #059669;
+
+  /* --------------------------------------------------------------------------
+   * Text (Light)
+   * ------------------------------------------------------------------------ */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --text-disabled: #cbd5e1;
+  --text-inverse: #f8fafc;
+  --text-link: #059669;
+  --text-link-hover: #047857;
+
+  /* --------------------------------------------------------------------------
+   * Accent: Emerald primary (Light)
+   * ------------------------------------------------------------------------ */
+  --accent-primary: #059669;
+  --accent-primary-hover: #047857;
+  --accent-primary-pressed: #065f46;
+  --accent-primary-soft: rgba(5, 150, 105, 0.12);
+  --accent-primary-border: rgba(5, 150, 105, 0.32);
+
+  /* --------------------------------------------------------------------------
+   * Accent: Soft Blue secondary (Light)
+   * ------------------------------------------------------------------------ */
+  --accent-secondary: #2563eb;
+  --accent-secondary-hover: #1d4ed8;
+  --accent-secondary-soft: rgba(37, 99, 235, 0.12);
+
+  /* --------------------------------------------------------------------------
+   * Status: semantic (Light)
+   * ------------------------------------------------------------------------ */
+  --status-success: #059669;
+  --status-success-soft: rgba(5, 150, 105, 0.1);
+  --status-warning: #d97706;
+  --status-warning-soft: rgba(217, 119, 6, 0.1);
+  --status-error: #dc2626;
+  --status-error-soft: rgba(220, 38, 38, 0.1);
+  --status-info: #2563eb;
+  --status-info-soft: rgba(37, 99, 235, 0.1);
+
+  /* --------------------------------------------------------------------------
+   * Focus (Light)
+   * ------------------------------------------------------------------------ */
+  --focus-ring: #059669;
+  --focus-ring-offset: #f8fafc;
+
+  /* --------------------------------------------------------------------------
+   * Icon (Light)
+   * ------------------------------------------------------------------------ */
+  --icon-primary: #0f172a;
+  --icon-secondary: #475569;
+  --icon-tertiary: #94a3b8;
+  --icon-accent: #059669;
+  --icon-disabled: #cbd5e1;
+
+  /* --------------------------------------------------------------------------
+   * Shadows (Light)
+   * ------------------------------------------------------------------------ */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.16);
+  --shadow-glow:
+    0 0 0 1px rgba(5, 150, 105, 0.32), 0 8px 24px rgba(5, 150, 105, 0.16);
+}
+
+/* Shared tokens (both themes) */
+:root {
+  /* --------------------------------------------------------------------------
    * Spacing (TOKENS §3): 4px base
    * ------------------------------------------------------------------------ */
   --space-0: 0;
@@ -113,16 +213,6 @@
   --radius-lg: 12px;
   --radius-xl: 16px;
   --radius-full: 9999px;
-
-  /* --------------------------------------------------------------------------
-   * Shadows (TOKENS §5): dark-mode calibrated
-   * ------------------------------------------------------------------------ */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.32);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.48);
-  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.56);
-  --shadow-glow:
-    0 0 0 1px rgba(16, 185, 129, 0.32), 0 8px 24px rgba(16, 185, 129, 0.16);
 
   /* --------------------------------------------------------------------------
    * Motion (TOKENS §6)

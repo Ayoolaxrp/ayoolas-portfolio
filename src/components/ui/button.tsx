@@ -32,6 +32,7 @@ export const buttonVariants = cva(
     "select-none whitespace-nowrap",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
     "disabled:cursor-not-allowed disabled:opacity-60",
+    "touch-target",
     "[&_svg]:size-4 [&_svg]:shrink-0",
   ].join(" "),
   {

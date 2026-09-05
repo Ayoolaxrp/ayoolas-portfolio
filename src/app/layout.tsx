@@ -10,6 +10,9 @@ import { CustomCursor } from "@/components/anim/custom-cursor";
 import { Preloader } from "@/components/anim/preloader";
 import { SmoothScroll } from "@/components/anim/smooth-scroll";
 import { ScrollProgress } from "@/components/anim/scroll-progress";
+import { CommandPalette } from "@/components/anim/command-palette";
+import { AnimatedFavicon } from "@/components/anim/animated-favicon";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 import {
   DEFAULT_METADATA,
@@ -23,12 +26,16 @@ import {
  * Newsreader is the editorial serif used for narrative accents (V5 design
  * direction: documentary pacing, serif for story, sans for information).
  * Self-hosted by Next.js; preloaded; no FOIT.
+ * Optimized for performance with preload.
  * ------------------------------------------------------------------------ */
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
   weight: ["400", "500", "600", "700"],
+  preload: true,
+  fallback: ["system-ui", "sans-serif"],
+  adjustFontFallback: true,
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -36,6 +43,9 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   display: "swap",
   weight: ["400", "500", "600"],
+  preload: true,
+  fallback: ["ui-monospace", "monospace"],
+  adjustFontFallback: true,
 });
 
 const newsreader = Newsreader({
@@ -44,6 +54,9 @@ const newsreader = Newsreader({
   display: "swap",
   style: ["normal", "italic"],
   weight: ["400", "500", "600"],
+  preload: true,
+  fallback: ["ui-serif", "serif"],
+  adjustFontFallback: true,
 });
 
 /* --------------------------------------------------------------------------
@@ -124,7 +137,7 @@ export const viewport: Viewport = {
   themeColor: "#0B0F14",
   width: "device-width",
   initialScale: 1,
-  colorScheme: "dark",
+  // colorScheme removed to allow light/dark theme switching
 };
 
 /* --------------------------------------------------------------------------
@@ -151,13 +164,17 @@ export default function RootLayout({
         <ScrollProgress />
         <SkipLink />
         <Preloader />
-        <div className="relative flex min-h-dvh flex-col">
-          <SiteHeader />
-          <main id="main-content" className="flex-1">
-            {children}
-          </main>
-          <SiteFooter />
-        </div>
+        <CommandPalette />
+        <AnimatedFavicon />
+        <ThemeProvider>
+          <div className="relative flex min-h-dvh flex-col">
+            <SiteHeader />
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+            <SiteFooter />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

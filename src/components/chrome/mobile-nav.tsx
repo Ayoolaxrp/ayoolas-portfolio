@@ -3,12 +3,13 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, X } from "lucide-react";
+import { ArrowRight, X, Sun, Moon, Monitor } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { stopSmoothScroll, startSmoothScroll } from "@/lib/scroll";
 import { Logo } from "./logo";
+import { useTheme } from "@/components/providers/theme-provider";
 import {
   CONTACT_ROUTE,
   PRIMARY_CTA_LABEL,
@@ -40,6 +41,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   const drawerRef = React.useRef<HTMLDivElement>(null);
   const triggerRef = React.useRef<HTMLElement | null>(null);
   const [closing, setClosing] = React.useState(false);
+  const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
 
   // Animated close: slide out, then unmount + release the parent state.
   // The drawer stays mounted while `closing`, so the exit transition plays.
@@ -223,6 +225,34 @@ export const MobileNav: React.FC<MobileNavProps> = ({
             );
           })}
         </nav>
+
+        {/* Theme Toggle - Mobile */}
+        <div className="px-4 py-4 border-t border-border-subtle">
+          <Button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={`Current theme: ${theme}. Click to cycle.`}
+            variant="secondary"
+            className="w-full justify-start gap-3"
+            data-magnetic
+          >
+            <div className="flex items-center gap-3">
+              {resolvedTheme === "dark" ? (
+                <Moon className="size-5 text-accent" aria-hidden />
+              ) : resolvedTheme === "light" ? (
+                <Sun className="size-5 text-accent" aria-hidden />
+              ) : (
+                <Monitor className="size-5 text-accent" aria-hidden />
+              )}
+              <span className="text-body-md font-medium text-text-primary">
+                Theme: {theme.charAt(0).toUpperCase() + theme.slice(1)}
+              </span>
+            </div>
+            <span className="font-mono text-caption text-text-tertiary">
+              {resolvedTheme === "dark" ? "Dark" : "Light"}
+            </span>
+          </Button>
+        </div>
 
         <div className="mt-auto border-t border-border-subtle p-6">
           <p className="mb-4 font-mono text-caption uppercase tracking-[0.18em] text-text-tertiary">

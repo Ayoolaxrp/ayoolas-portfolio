@@ -5,8 +5,7 @@
  * line if the canonical URL changes.
  */
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  "https://ayoolaxrp.github.io/elion-app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://ayoolaxrp.github.io/elion-app";
 
 export const dynamic = "force-static";
 

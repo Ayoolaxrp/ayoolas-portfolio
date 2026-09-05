@@ -11,9 +11,11 @@ import * as React from "react";
  * - Runs on rAF-throttled scroll reads; GPU-composited width updates only.
  * - Harmless under reduced motion (a static width reflects scroll position,
  *   which is not motion-for-motion's-sake, but we keep it subtle anyway).
+ * - Added glow effect and subtle thickness change for premium feel.
  */
 export const ScrollProgress: React.FC = () => {
   const barRef = React.useRef<HTMLDivElement>(null);
+  const glowRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (typeof window === "undefined") return;
@@ -23,11 +25,14 @@ export const ScrollProgress: React.FC = () => {
     const update = () => {
       raf = 0;
       const el = barRef.current;
-      if (!el) return;
+      const glow = glowRef.current;
+      if (!el || !glow) return;
       const doc = document.documentElement;
       const max = doc.scrollHeight - window.innerHeight;
       const progress = max > 0 ? window.scrollY / max : 0;
       el.style.transform = `scaleX(${progress})`;
+      // Move glow with progress
+      glow.style.transform = `translateX(${progress * 100}%)`;
     };
 
     const onScroll = () => {
@@ -47,10 +52,17 @@ export const ScrollProgress: React.FC = () => {
 
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[2px]">
+      {/* Glow that travels with progress */}
+      <div
+        ref={glowRef}
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/40 to-transparent blur-[4px] opacity-60"
+        style={{ transform: "translateX(-100%)" }}
+      />
       <div
         ref={barRef}
         aria-hidden
-        className="h-full w-full origin-left bg-gradient-to-r from-accent to-accent-secondary will-change-transform"
+        className="h-full w-full origin-left bg-gradient-to-r from-accent to-accent-secondary will-change-transform relative"
         style={{ transform: "scaleX(0)" }}
       />
     </div>

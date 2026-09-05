@@ -33,19 +33,22 @@ export const Portrait: React.FC<PortraitProps> = ({ src, alt, className }) => {
 
   return (
     <div className={cn("relative h-full w-full", className)}>
-      {/* Brief fallback while the photo loads (or if it is missing): a quiet
-          monogram. The "coming soon" copy was removed once the real portrait
-          landed: the frame should stay silent, never instructional. */}
-      <div className="absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-3 p-6">
-        <span
-          aria-hidden
-          className="flex size-16 items-center justify-center rounded-full bg-accent-soft text-2xl font-semibold text-accent"
-        >
+      {/* Fallback monogram: shown only until the real photo loads (or forever,
+          if the file is missing). When loaded, opacity drops to 0 so it does
+          not paint over the portrait. */}
+      <div
+        aria-hidden
+        className={cn(
+          "absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-3 p-6 transition-opacity duration-slow ease-standard",
+          loaded ? "opacity-0" : "opacity-100",
+        )}
+      >
+        <span className="flex size-16 items-center justify-center rounded-full bg-accent-soft text-2xl font-semibold text-accent">
           A
         </span>
       </div>
 
-      {/* The real photo, layered on top when provided */}
+      {/* The real photo, layered above the fallback. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         ref={imgRef}
@@ -57,6 +60,8 @@ export const Portrait: React.FC<PortraitProps> = ({ src, alt, className }) => {
           "absolute inset-0 h-full w-full object-cover transition-opacity duration-slow ease-standard",
           loaded ? "opacity-100" : "opacity-0",
         )}
+        loading="eager"
+        decoding="async"
       />
     </div>
   );
