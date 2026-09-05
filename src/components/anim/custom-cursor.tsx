@@ -154,30 +154,20 @@ export const CustomCursor: React.FC = () => {
       );
       const isImage = Boolean(imageEl);
 
-      // Check for text mode
-      const textEl = targetEl?.closest?.(
-        "a, button, [role='button'], [data-cursor-text], label, h1, h2, h3, h4, h5, h6, p, span, li, td, th",
-      );
-      const isText = Boolean(textEl) && !isImage;
-
-      // Check for interactive elements
+      // Check for interactive elements (buttons, links, magnetic)
       const interactiveEl = targetEl?.closest?.(
         "a, button, [role='button'], [data-magnetic], label, input[type='checkbox'], input[type='radio'], select",
       );
       const isInteractive = Boolean(interactiveEl);
 
-      state.current.hovering = isInteractive || isText || isImage;
-      state.current.textMode = isText;
+      state.current.hovering = isInteractive || isImage;
+      state.current.textMode = false; // Disable text mode - no "Select" label
       state.current.imageMode = isImage;
 
       if (isImage) {
         state.current.targetScale = 3.5;
         state.current.targetRotation = 15;
         state.current.labelText = "Zoom";
-      } else if (isText) {
-        state.current.targetScale = 2.2;
-        state.current.targetRotation = 0;
-        state.current.labelText = textEl?.getAttribute("data-cursor-text") ?? "Select";
       } else if (isInteractive) {
         state.current.targetScale = 1.8;
         state.current.targetRotation = 0;
@@ -189,7 +179,7 @@ export const CustomCursor: React.FC = () => {
       }
 
       ring.classList.toggle("bg-accent-soft", state.current.hovering);
-      ring.classList.toggle("border-accent", state.current.hovering && !isText && !isImage);
+      ring.classList.toggle("border-accent", state.current.hovering && !isImage);
       ring.classList.toggle("border-accent-border", !state.current.hovering);
       ring.classList.toggle("border-accent-secondary", isImage);
       dot.style.opacity = state.current.hovering ? "0.15" : "1";
